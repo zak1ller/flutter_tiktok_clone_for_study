@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class SignUpView extends StatelessWidget {
-  const SignUpView({super.key});
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
+
+  void onSignupTap(BuildContext context) {
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class SignUpView extends StatelessWidget {
             children: [
               Gaps.v80,
               Text(
-                "Sign up for TikTok",
+                "Log in to TikTok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -25,7 +29,7 @@ class SignUpView extends StatelessWidget {
               ),
               Gaps.v20,
               Text(
-                "Create a profile, follow other accounts, make your own videos, and more.",
+                "Manage your account, check notifications, comment on videios, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   color: Colors.black45,
@@ -44,18 +48,21 @@ class SignUpView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Already have an account?",
+              "Don't have an account?",
               style: TextStyle(
                 fontSize: Sizes.size16,
               ),
             ),
             Gaps.h5,
-            Text(
-              "Log in",
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: Sizes.size16,
-                fontWeight: FontWeight.w600,
+            GestureDetector(
+              onTap: () => onSignupTap(context),
+              child: Text(
+                "Sign up",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: Sizes.size16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
