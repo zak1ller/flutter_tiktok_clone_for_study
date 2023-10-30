@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/authentication/email_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 
-class UsernameView extends StatefulWidget {
-  const UsernameView({super.key});
+class EmailView extends StatefulWidget {
+  const EmailView({super.key});
 
   @override
-  State<UsernameView> createState() => _UsernameViewState();
+  State<EmailView> createState() => _EmailViewState();
 }
 
-class _UsernameViewState extends State<UsernameView> {
+class _EmailViewState extends State<EmailView> {
   final TextEditingController _usernameController = TextEditingController();
 
   String _username = "";
@@ -32,14 +31,6 @@ class _UsernameViewState extends State<UsernameView> {
     super.dispose();
   }
 
-  void _onNextTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailView(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,19 +48,10 @@ class _UsernameViewState extends State<UsernameView> {
           children: [
             Gaps.v40,
             const Text(
-              "Create username",
+              "What is your email",
               style: TextStyle(
                 fontSize: Sizes.size24,
                 fontWeight: FontWeight.w700,
-              ),
-            ),
-            Gaps.v8,
-            const Text(
-              "You can always change this later.",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: Sizes.size16,
-                fontWeight: FontWeight.w600,
               ),
             ),
             Gaps.v16,
@@ -77,7 +59,7 @@ class _UsernameViewState extends State<UsernameView> {
               controller: _usernameController,
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
-                hintText: "Username",
+                hintText: "Email",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey.shade400,
@@ -92,7 +74,7 @@ class _UsernameViewState extends State<UsernameView> {
             ),
             Gaps.v16,
             FormButton(
-              onTap: _onNextTap,
+              onTap: () {},
               disabled: _username.isEmpty,
             ),
           ],
