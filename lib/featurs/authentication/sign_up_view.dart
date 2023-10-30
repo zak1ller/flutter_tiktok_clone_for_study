@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/authentication/email_view.dart';
+import 'package:tiktok_clone/featurs/authentication/username_view.dart';
 import 'package:tiktok_clone/featurs/authentication/login_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/auth_button.dart';
 
@@ -22,7 +22,7 @@ class SignUpView extends StatelessWidget {
   void _onEmailLoginTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailView(),
+        builder: (context) => const UsernameView(),
       ),
     );
   }
