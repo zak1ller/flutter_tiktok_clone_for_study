@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/authentication/password_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 
 class EmailView extends StatefulWidget {
@@ -11,15 +12,15 @@ class EmailView extends StatefulWidget {
 }
 
 class _EmailViewState extends State<EmailView> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  String _username = "";
+  String _email = "";
 
   @override
   void initState() {
-    _usernameController.addListener(() {
+    _emailController.addListener(() {
       setState(() {
-        _username = _usernameController.text;
+        _email = _emailController.text;
       });
     });
     super.initState();
@@ -27,57 +28,84 @@ class _EmailViewState extends State<EmailView> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     super.dispose();
+  }
+
+  void _onScaffholdTap() {
+    FocusScope.of(context).unfocus();
+  }
+
+  void _onSubmit() {
+    if (_email.isEmpty || _isEmailValid() != null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PasswordView(),
+      ),
+    );
+  }
+
+  String? _isEmailValid() {
+    if (_email.isEmpty) return null;
+    final regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regExp.hasMatch(_email)) return "Email not valid";
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Sign up",
+    return GestureDetector(
+      onTap: _onScaffholdTap,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Sign up",
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size32,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Gaps.v40,
-            const Text(
-              "What is your email",
-              style: TextStyle(
-                fontSize: Sizes.size24,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Gaps.v16,
-            TextField(
-              controller: _usernameController,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                hintText: "Email",
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade400,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade400,
-                  ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size32,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Gaps.v40,
+              const Text(
+                "What is your email",
+                style: TextStyle(
+                  fontSize: Sizes.size24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-            Gaps.v16,
-            FormButton(
-              onTap: () {},
-              disabled: _username.isEmpty,
-            ),
-          ],
+              Gaps.v16,
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+                cursorColor: Theme.of(context).primaryColor,
+                onEditingComplete: _onSubmit,
+                decoration: InputDecoration(
+                  hintText: "Email",
+                  errorText: _isEmailValid(),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+              ),
+              Gaps.v16,
+              FormButton(
+                onTap: _onSubmit,
+                disabled: _email.isEmpty || _isEmailValid() != null,
+              ),
+            ],
+          ),
         ),
       ),
     );
