@@ -14,6 +14,10 @@ class _LoginFormViewState extends State<LoginFormView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, String> formData = {};
 
+  void _onScaffoldTap() {
+    FocusScope.of(context).unfocus();
+  }
+
   void _onSubmitTap() {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
@@ -24,59 +28,62 @@ class _LoginFormViewState extends State<LoginFormView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Log in"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Sizes.size32),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Gaps.v28,
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+    return GestureDetector(
+      onTap: _onScaffoldTap,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Log in"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size32),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Gaps.v28,
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
                   ),
+                  validator: (value) {
+                    return "I don't like your email";
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['email'] = newValue;
+                    }
+                  },
                 ),
-                validator: (value) {
-                  return "I don't like your email";
-                },
-                onSaved: (newValue) {
-                  if (newValue != null) {
-                    formData['email'] = newValue;
-                  }
-                },
-              ),
-              Gaps.v16,
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
+                Gaps.v16,
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
                   ),
+                  validator: (value) {
+                    return "Wrong password";
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['password'] = newValue;
+                    }
+                  },
                 ),
-                validator: (value) {
-                  return "Wrong password";
-                },
-                onSaved: (newValue) {
-                  if (newValue != null) {
-                    formData['password'] = newValue;
-                  }
-                },
-              ),
-              Gaps.v28,
-              FormButton(
-                text: "Log in",
-                disabled: false,
-                onTap: _onSubmitTap,
-              )
-            ],
+                Gaps.v28,
+                FormButton(
+                  text: "Log in",
+                  disabled: false,
+                  onTap: _onSubmitTap,
+                )
+              ],
+            ),
           ),
         ),
       ),
