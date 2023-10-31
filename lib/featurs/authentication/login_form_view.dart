@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
 
 class LoginFormView extends StatefulWidget {
   const LoginFormView({super.key});
@@ -22,6 +23,11 @@ class _LoginFormViewState extends State<LoginFormView> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InterestsView(),
+          ),
+        );
       }
     }
   }
@@ -50,7 +56,11 @@ class _LoginFormViewState extends State<LoginFormView> {
                     ),
                   ),
                   validator: (value) {
-                    return "I don't like your email";
+                    if (value == null || value.isEmpty) {
+                      return "Please write your email";
+                    } else {
+                      return null;
+                    }
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
@@ -60,6 +70,7 @@ class _LoginFormViewState extends State<LoginFormView> {
                 ),
                 Gaps.v16,
                 TextFormField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: "Password",
                     focusedBorder: UnderlineInputBorder(
@@ -68,7 +79,11 @@ class _LoginFormViewState extends State<LoginFormView> {
                     ),
                   ),
                   validator: (value) {
-                    return "Wrong password";
+                    if (value == null || value.isEmpty) {
+                      return "Please enter a password.";
+                    } else {
+                      return null;
+                    }
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
