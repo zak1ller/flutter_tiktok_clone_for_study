@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
+import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
 
 class MainNavigationView extends StatefulWidget {
   const MainNavigationView({super.key});
@@ -48,6 +47,15 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     });
   }
 
+  void _onPostVideoTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Container(),
+        fullscreenDialog: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +90,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
             vertical: 0,
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NavigationButton(
                 icon: FontAwesomeIcons.house,
@@ -94,6 +103,13 @@ class _MainNavigationViewState extends State<MainNavigationView> {
                 title: "Dicover",
                 isSelected: _selectedIndex == 1,
                 onTap: () => _onTap(1),
+              ),
+              NavigationButton(
+                icon: Icons.abc,
+                title: "custom",
+                isSelected: _selectedIndex == 2,
+                onTap: () => _onPostVideoTap(),
+                customWidget: const PostVedioButton(),
               ),
               NavigationButton(
                 icon: FontAwesomeIcons.message,

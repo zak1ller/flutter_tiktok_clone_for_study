@@ -39,7 +39,7 @@ class _TutorialViewState extends State<TutorialView> {
   void _onEnterAppTap() {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => MainNavigationView(),
+        builder: (context) => const MainNavigationView(),
       ),
       (route) => false,
     );
