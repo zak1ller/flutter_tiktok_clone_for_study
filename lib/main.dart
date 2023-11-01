@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/authentication/sign_up_view.dart';
 import 'package:tiktok_clone/featurs/main_navigation/main_navigation_view.dart';
 
 void main() {
@@ -28,7 +27,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MainNavigationView(),
+      home: const MainNavigationView(),
     );
   }
 }
