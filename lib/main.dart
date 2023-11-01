@@ -28,7 +28,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainNavigationView(),
+      home: MainNavigationView(),
     );
   }
 }
