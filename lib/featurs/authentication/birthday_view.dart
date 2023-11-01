@@ -36,10 +36,11 @@ class _BirthdayViewState extends State<BirthdayView> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsView(),
       ),
+      (route) => false,
     );
   }
 

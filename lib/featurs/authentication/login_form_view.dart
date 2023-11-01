@@ -23,10 +23,11 @@ class _LoginFormViewState extends State<LoginFormView> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).push(
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const InterestsView(),
           ),
+          (route) => false,
         );
       }
     }
