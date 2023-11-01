@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/onboarding/widgets/tutorial_page.dart';
+
+enum Direction { left, right }
+
+enum Page { first, second }
 
 class TutorialView extends StatefulWidget {
   const TutorialView({super.key});
@@ -10,103 +15,74 @@ class TutorialView extends StatefulWidget {
 }
 
 class _TutorialViewState extends State<TutorialView> {
+  Direction _direction = Direction.right;
+  Page _page = Page.first;
+
+  void _onPanUpdate(DragUpdateDetails detail) {
+    if (detail.delta.dx > 0) {
+      _direction = Direction.right;
+    } else {
+      _direction = Direction.left;
+    }
+  }
+
+  void _onPanEnd(DragEndDetails detail) {
+    if (_direction == Direction.left) {
+      _page = Page.second;
+    } else {
+      _page = Page.first;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
+    return GestureDetector(
+      onPanUpdate: _onPanUpdate,
+      onPanEnd: _onPanEnd,
       child: Scaffold(
-        body: const SafeArea(
-          child: TabBarView(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Sizes.size24,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v52,
-                    Text(
-                      "Watch cool videos!",
-                      style: TextStyle(
-                        fontSize: Sizes.size40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gaps.v16,
-                    Text(
-                      "Videos are personalized for you based on waht you watch, like, and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size20,
-                      ),
-                    ),
-                  ],
-                ),
+        body: SafeArea(
+          child: AnimatedCrossFade(
+            firstChild: const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.size24,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Sizes.size24,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v52,
-                    Text(
-                      "Follow the rules!",
-                      style: TextStyle(
-                        fontSize: Sizes.size40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gaps.v16,
-                    Text(
-                      "Videos are personalized for you based on waht you watch, like, and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size20,
-                      ),
-                    ),
-                  ],
-                ),
+              child: TutorialPage(
+                title: 'Watch cool videos!',
+                contents:
+                    'Videos are personalized for you based on what you watch, like, and share.',
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Sizes.size24,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v52,
-                    Text(
-                      "Enjoy the ride",
-                      style: TextStyle(
-                        fontSize: Sizes.size40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Gaps.v16,
-                    Text(
-                      "Videos are personalized for you based on waht you watch, like, and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size20,
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            secondChild: const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.size24,
               ),
-            ],
+              child: TutorialPage(
+                title: 'Follow the rules',
+                contents: 'Take care of one another! Plis!',
+              ),
+            ),
+            crossFadeState: _page == Page.first
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: const Duration(milliseconds: 300),
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: Sizes.size48),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TabPageSelector(
-                    selectedColor: Theme.of(context).primaryColor,
-                  ),
-                ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size24,
+              vertical: Sizes.size24,
+            ),
+            child: AnimatedOpacity(
+              duration: const Duration(
+                milliseconds: 300,
+              ),
+              opacity: _page == Page.first ? 0 : 1,
+              child: CupertinoButton(
+                color: Theme.of(context).primaryColor,
+                child: const Text("Enter the app!"),
+                onPressed: () {},
               ),
             ),
           ),
