@@ -20,17 +20,22 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     ),
     const Column(
       children: [
-        Text("Search"),
+        Text("Discover"),
       ],
     ),
     const Column(
       children: [
-        Text("Home"),
+        Text("Video"),
       ],
     ),
     const Column(
       children: [
-        Text("Search"),
+        Text("Inbox"),
+      ],
+    ),
+    const Column(
+      children: [
+        Text("Profile"),
       ],
     ),
   ];
@@ -46,6 +51,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: views[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(

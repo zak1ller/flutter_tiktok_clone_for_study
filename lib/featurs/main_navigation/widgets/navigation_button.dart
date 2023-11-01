@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 class NavigationButton extends StatelessWidget {
   final IconData icon;
+  final IconData? selectedIcon;
   final String title;
   final bool isSelected;
 
@@ -15,6 +17,7 @@ class NavigationButton extends StatelessWidget {
     required this.title,
     required this.isSelected,
     required this.onTap,
+    this.selectedIcon,
   });
 
   @override
@@ -23,6 +26,7 @@ class NavigationButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap.call(),
         child: Container(
+          color: Colors.black,
           padding: const EdgeInsets.symmetric(
             vertical: 16,
           ),
@@ -33,13 +37,17 @@ class NavigationButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 FaIcon(
-                  icon,
+                  isSelected ? selectedIcon ?? icon : icon,
+                  size: Sizes.size20,
                   color: Colors.white,
                 ),
-                Gaps.v5,
+                Gaps.v8,
                 Text(
                   title,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: Sizes.size14,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
