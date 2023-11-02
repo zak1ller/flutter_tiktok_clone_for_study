@@ -211,16 +211,16 @@ class _VideoPostState extends State<VideoPost>
           Positioned(
             left: WidgetManager.getPositionFromKey(_seeMoreTextKey) == null
                 ? 0
-                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dx - 5,
+                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dx - 7.5,
             top: WidgetManager.getPositionFromKey(_seeMoreTextKey) == null
                 ? 0
-                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dy - 5,
+                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dy - 7.5,
             child: WidgetManager.getSize(_seeMoreTextKey) == null
                 ? Container()
                 : Container(
                     color: Colors.black.withOpacity(0.5),
-                    width: WidgetManager.getSize(_seeMoreTextKey)!.width + 10,
-                    height: WidgetManager.getSize(_seeMoreTextKey)!.height + 10,
+                    width: WidgetManager.getSize(_seeMoreTextKey)!.width + 15,
+                    height: WidgetManager.getSize(_seeMoreTextKey)!.height + 15,
                   ),
           ),
         ],
