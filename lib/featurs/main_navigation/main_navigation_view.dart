@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/featurs/videos/video_timeline_view.dart';
 
 class MainNavigationView extends StatefulWidget {
   const MainNavigationView({super.key});
@@ -63,7 +64,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: views[_selectedIndex],
+            child: const VideoTimelineView(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
