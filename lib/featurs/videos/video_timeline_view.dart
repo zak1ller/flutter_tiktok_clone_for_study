@@ -13,6 +13,11 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
   int _itemCount = 4;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -47,6 +52,7 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
       itemCount: _itemCount,
       itemBuilder: (context, index) => VideoPost(
         onVideoFinisehd: _onVideoFinished,
+        index: index,
       ),
       onPageChanged: _onPageChanged,
     );
