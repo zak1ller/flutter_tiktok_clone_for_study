@@ -150,39 +150,37 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned(
-            left: Sizes.size16,
-            bottom: Sizes.size16,
+          Padding(
+            padding: const EdgeInsets.all(16),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Expanded(
+                  child: Container(),
+                ),
                 const Text(
-                  "@Jason",
+                  "@Json",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: Sizes.size20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Gaps.v8,
+                Gaps.v2,
                 Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      color: Colors.black.withOpacity(0.5),
-                      width: _isTappedSeeMore
-                          ? null
-                          : MediaQuery.of(context).size.width / 2,
-                      child: const Text(
-                        "This is my house in Thailand! asljdlkkdlsa dajslkdj asjdlk",
-                        style: TextStyle(
+                    Expanded(
+                      child: Text(
+                        "sdjlkadkladn slakdjslkadjklad dsjakldjskladn alkdjakldjslkadjsla dlkajdskladjslkadjlkadjkldjk",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: _isTappedSeeMore ? 10 : 1,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: Sizes.size16,
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    Container(),
                     _isTappedSeeMore
                         ? Container()
                         : GestureDetector(
@@ -195,6 +193,11 @@ class _VideoPostState extends State<VideoPost>
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
+                    _isTappedSeeMore
+                        ? Container()
+                        : Expanded(
+                            child: Container(),
                           ),
                   ],
                 ),
