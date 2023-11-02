@@ -27,8 +27,6 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPlaying = false;
   bool _isTappedSeeMore = false;
-  final int _maxTextLength = 100;
-  final String _temporaryText = "This is my house in Thailand!";
 
   @override
   void initState() {
@@ -101,10 +99,6 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
-  bool _isExceedLength() {
-    return _temporaryText.length > _maxTextLength;
-  }
-
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -173,24 +167,32 @@ class _VideoPostState extends State<VideoPost>
                 Gaps.v8,
                 Row(
                   children: [
-                    Text(
-                      _isExceedLength() ? _temporaryText.substring(0, _maxTextLength) : _temporaryText,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: Sizes.size16,
+                    Container(
+                      color: Colors.black.withOpacity(0.5),
+                      width: _isTappedSeeMore
+                          ? null
+                          : MediaQuery.of(context).size.width / 2,
+                      child: const Text(
+                        "This is my house in Thailand! asljdlkkdlsa dklajdskl sjk",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: Sizes.size16,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     AnimatedOpacity(
                       opacity: _isTappedSeeMore ? 0 : 1,
                       duration: const Duration(milliseconds: 100),
-                      child: const Text(
-                        "See more",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: Sizes.size16,
-                          fontWeight: FontWeight.w600,
+                      child: GestureDetector(
+                        onTap: _onSeeMoreTap,
+                        child: const Text(
+                          "See more",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Sizes.size16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
