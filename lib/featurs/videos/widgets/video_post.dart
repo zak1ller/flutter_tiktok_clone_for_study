@@ -151,58 +151,54 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned(
-            width: MediaQuery.of(context).size.width - 32,
             left: Sizes.size16,
             bottom: Sizes.size16,
-            child: Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "@Jason",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Sizes.size20,
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@Jason",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Gaps.v8,
-                  Row(
-                    children: [
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
-                        width: _isTappedSeeMore
-                            ? null
-                            : MediaQuery.of(context).size.width / 2,
-                        child: const Text(
-                          "This is my house in Thailand! asljdlkkdlsa dajslkdj asjdlk",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: Sizes.size16,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                ),
+                Gaps.v8,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      color: Colors.black.withOpacity(0.5),
+                      width: _isTappedSeeMore
+                          ? null
+                          : MediaQuery.of(context).size.width / 2,
+                      child: const Text(
+                        "This is my house in Thailand! asljdlkkdlsa dajslkdj asjdlk",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: Sizes.size16,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      Expanded(
-                        child: _isTappedSeeMore
-                            ? Container()
-                            : GestureDetector(
-                                onTap: _onSeeMoreTap,
-                                child: const Text(
-                                  "See more",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: Sizes.size16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                    ),
+                    _isTappedSeeMore
+                        ? Container()
+                        : GestureDetector(
+                            onTap: _onSeeMoreTap,
+                            child: const Text(
+                              "See more",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Sizes.size16,
+                                fontWeight: FontWeight.w600,
                               ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
