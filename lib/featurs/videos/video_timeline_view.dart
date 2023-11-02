@@ -8,6 +8,7 @@ class VideoTimelineView extends StatefulWidget {
 }
 
 class _VideoTimelineViewState extends State<VideoTimelineView> {
+  final PageController _pageController = PageController();
   int _itemCount = 4;
   List<Color> colors = [
     Colors.red,
@@ -17,6 +18,11 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
   ];
 
   void _onPageChanged(int page) {
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.linear,
+    );
     if (page == _itemCount - 1) {
       _itemCount += 4;
       colors.addAll([
@@ -32,6 +38,7 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
+      controller: _pageController,
       scrollDirection: Axis.vertical,
       itemCount: _itemCount,
       itemBuilder: (context, index) => Container(
