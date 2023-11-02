@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -23,21 +24,17 @@ class _VideoPostState extends State<VideoPost>
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
   late final AnimationController _animationController;
+
   bool _isPlaying = false;
+  bool _isTappedSeeMore = false;
+  final int _maxTextLength = 100;
+  final String _temporaryText = "This is my house in Thailand!";
 
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
-    _animationController = AnimationController(
-      vsync: this,
-      lowerBound: 1.0,
-      upperBound: 1.5,
-      value: 1.5,
-      duration: const Duration(
-        milliseconds: 100,
-      ),
-    );
+    _initAnimationController();
   }
 
   @override
@@ -48,8 +45,21 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
+  }
+
+  void _initAnimationController() {
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 1.0,
+      upperBound: 1.5,
+      value: 1.5,
+      duration: const Duration(
+        milliseconds: 100,
+      ),
+    );
   }
 
   void _onVideoChange() {
@@ -83,6 +93,16 @@ class _VideoPostState extends State<VideoPost>
     setState(() {
       _isPlaying = _videoPlayerController.value.isPlaying;
     });
+  }
+
+  void _onSeeMoreTap() {
+    setState(() {
+      _isTappedSeeMore = !_isTappedSeeMore;
+    });
+  }
+
+  bool _isExceedLength() {
+    return _temporaryText.length > _maxTextLength;
   }
 
   @override
@@ -134,6 +154,49 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            left: Sizes.size16,
+            bottom: Sizes.size16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@Jason",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: Sizes.size20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v8,
+                Row(
+                  children: [
+                    Text(
+                      _isExceedLength() ? _temporaryText.substring(0, _maxTextLength) : _temporaryText,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: Sizes.size16,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    AnimatedOpacity(
+                      opacity: _isTappedSeeMore ? 0 : 1,
+                      duration: const Duration(milliseconds: 100),
+                      child: const Text(
+                        "See more",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: Sizes.size16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

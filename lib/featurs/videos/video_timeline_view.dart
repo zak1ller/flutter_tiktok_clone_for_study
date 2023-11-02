@@ -36,12 +36,12 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
   }
 
   void _onVideoFinished() {
-    _pageController.nextPage(
-      duration: const Duration(
-        milliseconds: 150,
-      ),
-      curve: Curves.linear,
-    );
+    // _pageController.nextPage(
+    //   duration: const Duration(
+    //     milliseconds: 150,
+    //   ),
+    //   curve: Curves.linear,
+    // );
   }
 
   @override
