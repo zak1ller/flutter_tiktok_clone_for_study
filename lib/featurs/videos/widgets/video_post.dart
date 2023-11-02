@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utils/position_manager.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -24,6 +25,8 @@ class _VideoPostState extends State<VideoPost>
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
   late final AnimationController _animationController;
+
+  final GlobalKey _seeMoreTextKey = GlobalKey();
 
   bool _isPlaying = false;
   bool _isTappedSeeMore = false;
@@ -185,9 +188,10 @@ class _VideoPostState extends State<VideoPost>
                         ? Container()
                         : GestureDetector(
                             onTap: _onSeeMoreTap,
-                            child: const Text(
+                            child: Text(
                               "See more",
-                              style: TextStyle(
+                              key: _seeMoreTextKey,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: Sizes.size16,
                                 fontWeight: FontWeight.w600,
@@ -203,6 +207,21 @@ class _VideoPostState extends State<VideoPost>
                 ),
               ],
             ),
+          ),
+          Positioned(
+            left: WidgetManager.getPositionFromKey(_seeMoreTextKey) == null
+                ? 0
+                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dx - 5,
+            top: WidgetManager.getPositionFromKey(_seeMoreTextKey) == null
+                ? 0
+                : WidgetManager.getPositionFromKey(_seeMoreTextKey)!.dy - 5,
+            child: WidgetManager.getSize(_seeMoreTextKey) == null
+                ? Container()
+                : Container(
+                    color: Colors.black.withOpacity(0.5),
+                    width: WidgetManager.getSize(_seeMoreTextKey)!.width + 10,
+                    height: WidgetManager.getSize(_seeMoreTextKey)!.height + 10,
+                  ),
           ),
         ],
       ),
