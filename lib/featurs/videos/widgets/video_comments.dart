@@ -13,6 +13,8 @@ class VideoComments extends StatefulWidget {
 class _VideoCommentsState extends State<VideoComments> {
   bool _isWriting = false;
 
+  final ScrollController _scrollController = ScrollController();
+
   void _onCloseTap() {
     Navigator.of(context).pop();
   }
@@ -62,60 +64,65 @@ class _VideoCommentsState extends State<VideoComments> {
           onTap: _stopWriting,
           child: Stack(
             children: [
-              ListView.separated(
-                separatorBuilder: (context, index) => Gaps.v16,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size16,
-                  // vertical: Sizes.size16,
-                ),
-                itemCount: 10,
-                itemBuilder: (context, index) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      radius: Sizes.size16,
-                      child: Text("Jason"),
-                    ),
-                    Gaps.h8,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Jason",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey.shade500,
+              Scrollbar(
+                controller: _scrollController,
+                child: ListView.separated(
+                  controller: _scrollController,
+                  separatorBuilder: (context, index) => Gaps.v16,
+                  padding: const EdgeInsets.only(
+                    left: Sizes.size16,
+                    right: Sizes.size16,
+                    bottom: Sizes.size96 + Sizes.size20,
+                  ),
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        radius: Sizes.size16,
+                        child: Text("Jason"),
+                      ),
+                      Gaps.h8,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Jason",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade500,
+                              ),
                             ),
+                            Gaps.v5,
+                            const Text(
+                              "djaskldjmc dlksajdlksajd djlkasjdk lsaj dlkadj dskalj dkl sajdlksaj djsalkdjlks",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Gaps.h8,
+                      Column(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.heart,
+                            size: Sizes.size20,
+                            color: Colors.grey.shade500,
                           ),
                           Gaps.v5,
-                          const Text(
-                            "djaskldjmc dlksajdlksajd djlkasjdk lsaj dlkadj dskalj dkl sajdlksaj djsalkdjlks",
+                          Text(
+                            "52.2K",
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey.shade500,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Gaps.h8,
-                    Column(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size20,
-                          color: Colors.grey.shade500,
-                        ),
-                        Gaps.v5,
-                        Text(
-                          "52.2K",
-                          style: TextStyle(
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Positioned(
