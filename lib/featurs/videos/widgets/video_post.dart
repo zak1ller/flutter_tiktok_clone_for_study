@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -26,7 +27,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPlaying = false;
-  bool _isTappedSeeMore = false;
+  final bool _isTappedSeeMore = false;
 
   @override
   void initState() {
@@ -175,6 +176,36 @@ class _VideoPostState extends State<VideoPost>
                       ),
                     ),
                   ],
+                ),
+              ],
+            ),
+          ),
+          const Positioned(
+            right: 16,
+            bottom: 16,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundImage:
+                      NetworkImage("https://source.unsplash.com/random"),
+                  child: Text("Jason"),
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
                 ),
               ],
             ),

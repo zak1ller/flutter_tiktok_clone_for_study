@@ -44,17 +44,28 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
     // );
   }
 
+  Future<void> _onRefresh() {
+    return Future.delayed(
+      const Duration(seconds: 1),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: _pageController,
-      scrollDirection: Axis.vertical,
-      itemCount: _itemCount,
-      itemBuilder: (context, index) => VideoPost(
-        onVideoFinisehd: _onVideoFinished,
-        index: index,
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      edgeOffset: 20,
+      color: Theme.of(context).primaryColor,
+      child: PageView.builder(
+        controller: _pageController,
+        scrollDirection: Axis.vertical,
+        itemCount: _itemCount,
+        itemBuilder: (context, index) => VideoPost(
+          onVideoFinisehd: _onVideoFinished,
+          index: index,
+        ),
+        onPageChanged: _onPageChanged,
       ),
-      onPageChanged: _onPageChanged,
     );
   }
 }
