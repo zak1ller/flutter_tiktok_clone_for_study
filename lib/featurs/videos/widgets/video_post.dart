@@ -109,6 +109,7 @@ class _VideoPostState extends State<VideoPost>
     }
     // bottom sheet가 dismiss 될때까지 기다립니다.
     await showModalBottomSheet(
+      isScrollControlled: true,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => const VideoComments(),
