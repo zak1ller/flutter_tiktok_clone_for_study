@@ -6,32 +6,37 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class VideoButton extends StatelessWidget {
   final IconData icon;
   final String text;
+  final Function? onTap;
 
   const VideoButton({
     super.key,
     required this.icon,
     required this.text,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FaIcon(
-          icon,
-          color: Colors.white,
-          size: Sizes.size36,
-        ),
-        Gaps.v5,
-        Text(
-          text,
-          style: const TextStyle(
+    return GestureDetector(
+      onTap: () => onTap?.call(),
+      child: Column(
+        children: [
+          FaIcon(
+            icon,
             color: Colors.white,
-            fontWeight: FontWeight.w400,
-            fontSize: Sizes.size14,
+            size: Sizes.size36,
           ),
-        ),
-      ],
+          Gaps.v5,
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontSize: Sizes.size14,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

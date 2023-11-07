@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/featurs/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -27,7 +28,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPlaying = false;
-  final bool _isTappedSeeMore = false;
+  bool _isPauseButtonTapped = false;
 
   @override
   void initState() {
@@ -73,17 +74,24 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_videoPlayerController.value.isPlaying &&
+        !_isPauseButtonTapped) {
       _videoPlayerController.play();
     }
   }
 
+  /*
+  사용자가 버튼을 눌러 일시정지 하는 경우에만 호출됩니다.
+  */
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _isPauseButtonTapped = true;
       _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      _isPauseButtonTapped = false;
       _animationController.forward();
     }
   }
@@ -92,6 +100,24 @@ class _VideoPostState extends State<VideoPost>
     setState(() {
       _isPlaying = _videoPlayerController.value.isPlaying;
     });
+  }
+
+  void _onCommnetTap(BuildContext context) async {
+    if (_isPlaying) {
+      // 사용자가 버튼을 눌러 일시정지 한 것이 아니기 때문에 onTogglePause를 호출하지 않습니다.
+      _videoPlayerController.pause();
+    }
+    // bottom sheet가 dismiss 될때까지 기다립니다.
+    await showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => const VideoComments(),
+    );
+    if (!_isPauseButtonTapped) {
+      // 사용자가 버튼을 눌러 일시정지 한 상태인 경우에는 다시 재생하지 않습니다.
+      // 사용자가 버튼을 누르지 않고 자동으로 pause된 상태에서는 onTogglePause를 호출하여 다시 재생합니다.
+      _onTogglePause();
+    }
   }
 
   @override
@@ -180,12 +206,12 @@ class _VideoPostState extends State<VideoPost>
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             right: 16,
             bottom: 16,
             child: Column(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundImage:
@@ -193,17 +219,18 @@ class _VideoPostState extends State<VideoPost>
                   child: Text("Jason"),
                 ),
                 Gaps.v24,
-                VideoButton(
+                const VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
                   text: "2.9M",
                 ),
                 Gaps.v24,
                 VideoButton(
+                  onTap: () => _onCommnetTap(context),
                   icon: FontAwesomeIcons.solidComment,
                   text: "33K",
                 ),
                 Gaps.v24,
-                VideoButton(
+                const VideoButton(
                   icon: FontAwesomeIcons.share,
                   text: "Share",
                 ),
