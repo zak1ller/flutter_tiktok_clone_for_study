@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -10,8 +12,28 @@ class ActivityView extends StatefulWidget {
   State<ActivityView> createState() => _ActivityViewState();
 }
 
-class _ActivityViewState extends State<ActivityView> {
+class _ActivityViewState extends State<ActivityView>
+    with SingleTickerProviderStateMixin {
   final List<String> _notifications = List.generate(20, (index) => "${index}h");
+
+  late final AnimationController _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 100,
+      ));
+
+  late final Animation<double> _animation = Tween(
+    begin: 0.0,
+    end: 0.5,
+  ).animate(
+    _animationController,
+  );
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   void _onDismissed(String notification) {
     setState(() {
@@ -19,11 +41,35 @@ class _ActivityViewState extends State<ActivityView> {
     });
   }
 
+  void _onTitleTap() {
+    if (_animationController.isCompleted) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All activity"),
+        title: GestureDetector(
+          onTap: _onTitleTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("All activity"),
+              Gaps.h2,
+              RotationTransition(
+                turns: _animation,
+                child: const FaIcon(
+                  FontAwesomeIcons.chevronDown,
+                  size: Sizes.size14,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(
