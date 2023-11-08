@@ -29,6 +29,8 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPlaying = false;
   bool _isPauseButtonTapped = false;
+  // Disposed 이후 VisibilityDetector 호출을 막기 위해 dispoased를 체크하는 변수입니다.
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   void dispose() {
+    _isDisposed = true;
     _videoPlayerController.dispose();
     super.dispose();
   }
@@ -78,6 +81,11 @@ class _VideoPostState extends State<VideoPost>
         !_videoPlayerController.value.isPlaying &&
         !_isPauseButtonTapped) {
       _videoPlayerController.play();
+    }
+    if (!_isDisposed &&
+        _videoPlayerController.value.isPlaying &&
+        info.visibleFraction == 0) {
+      _onTogglePause();
     }
   }
 

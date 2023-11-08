@@ -13,11 +13,7 @@ class MainNavigationView extends StatefulWidget {
 
 class _MainNavigationViewState extends State<MainNavigationView> {
   final List<Widget> views = [
-    const Column(
-      children: [
-        Text("Home"),
-      ],
-    ),
+    const VideoTimelineView(),
     const Column(
       children: [
         Text("Discover"),
