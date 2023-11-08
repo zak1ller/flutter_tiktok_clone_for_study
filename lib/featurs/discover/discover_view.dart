@@ -43,7 +43,31 @@ class DiscoverView extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(children: []),
+        body: TabBarView(children: [
+          GridView.builder(
+            itemCount: 20,
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size8,
+              vertical: Sizes.size8,
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: Sizes.size8,
+              mainAxisSpacing: Sizes.size8,
+              childAspectRatio: 9 / 16,
+            ),
+            itemBuilder: (context, index) => Container(
+              color: Colors.black,
+              child: Center(
+                child: Text("$index"),
+              ),
+            ),
+          ),
+          for (final tab in tabs.skip(1))
+            Center(
+              child: Text(tab),
+            ),
+        ]),
       ),
     );
   }
