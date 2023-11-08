@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/discover/widgets/top_grid.dart';
 
 class DiscoverView extends StatelessWidget {
   DiscoverView({super.key});
@@ -54,13 +55,11 @@ class DiscoverView extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: Sizes.size8,
               mainAxisSpacing: Sizes.size8,
-              childAspectRatio: 9 / 16,
+              childAspectRatio: 9 / 20,
             ),
             itemBuilder: (context, index) => Container(
-              color: Colors.black,
-              child: Center(
-                child: Text("$index"),
-              ),
+              color: Colors.black.withOpacity(0.1),
+              child: const TopGrid(),
             ),
           ),
           for (final tab in tabs.skip(1))
