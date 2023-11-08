@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/inbox/activity_view.dart';
 
 class InboxView extends StatelessWidget {
   const InboxView({super.key});
 
   void _onDmTap() {}
+  void _onActivityTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ActivityView(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +28,16 @@ class InboxView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const ListTile(
-            title: Text(
+          ListTile(
+            onTap: () => _onActivityTap(context),
+            title: const Text(
               "Activity",
               style: TextStyle(
                 fontSize: Sizes.size16,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            trailing: FaIcon(
+            trailing: const FaIcon(
               FontAwesomeIcons.chevronRight,
               size: Sizes.size14,
               color: Colors.black,
