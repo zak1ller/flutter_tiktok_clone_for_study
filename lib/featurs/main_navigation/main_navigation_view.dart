@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/featurs/discover/discover_view.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/featurs/videos/video_timeline_view.dart';
@@ -14,11 +15,7 @@ class MainNavigationView extends StatefulWidget {
 class _MainNavigationViewState extends State<MainNavigationView> {
   final List<Widget> views = [
     const VideoTimelineView(),
-    const Column(
-      children: [
-        Text("Discover"),
-      ],
-    ),
+    const DiscoverView(),
     const Column(
       children: [
         Text("Video"),
@@ -66,7 +63,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: views[_selectedIndex],
+            child: const DiscoverView(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
@@ -83,7 +80,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: _selectedIndex == 0 ? Colors.black : Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 0,
@@ -95,31 +92,38 @@ class _MainNavigationViewState extends State<MainNavigationView> {
                 icon: FontAwesomeIcons.house,
                 title: "Home",
                 isSelected: _selectedIndex == 0,
+                reverse: _selectedIndex == 0,
                 onTap: () => _onTap(0),
               ),
               NavigationButton(
                 icon: FontAwesomeIcons.magnifyingGlass,
                 title: "Dicover",
                 isSelected: _selectedIndex == 1,
+                reverse: _selectedIndex == 0,
                 onTap: () => _onTap(1),
               ),
               NavigationButton(
                 icon: Icons.abc,
                 title: "custom",
                 isSelected: _selectedIndex == 2,
+                reverse: _selectedIndex == 0,
                 onTap: () => _onPostVideoTap(),
-                customWidget: const PostVedioButton(),
+                customWidget: PostVedioButton(
+                  reverse: _selectedIndex == 0,
+                ),
               ),
               NavigationButton(
                 icon: FontAwesomeIcons.message,
                 title: "Inbox",
                 isSelected: _selectedIndex == 3,
+                reverse: _selectedIndex == 0,
                 onTap: () => _onTap(3),
               ),
               NavigationButton(
                 icon: FontAwesomeIcons.user,
                 title: "Profile",
                 isSelected: _selectedIndex == 4,
+                reverse: _selectedIndex == 0,
                 onTap: () => _onTap(4),
               ),
             ],

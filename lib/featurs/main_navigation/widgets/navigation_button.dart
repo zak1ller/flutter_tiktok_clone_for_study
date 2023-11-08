@@ -9,6 +9,7 @@ class NavigationButton extends StatelessWidget {
   final IconData? selectedIcon;
   final String title;
   final bool isSelected;
+  final bool reverse;
 
   final Function onTap;
 
@@ -22,6 +23,7 @@ class NavigationButton extends StatelessWidget {
     required this.onTap,
     this.selectedIcon,
     this.customWidget,
+    this.reverse = false,
   });
 
   @override
@@ -30,7 +32,8 @@ class NavigationButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap.call(),
         child: Container(
-          decoration: const BoxDecoration(color: Colors.black),
+          decoration:
+              BoxDecoration(color: reverse ? Colors.black : Colors.white),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -49,13 +52,13 @@ class NavigationButton extends StatelessWidget {
                         FaIcon(
                           isSelected ? selectedIcon ?? icon : icon,
                           size: Sizes.size20,
-                          color: Colors.white,
+                          color: reverse ? Colors.white : Colors.black,
                         ),
                         Gaps.v8,
                         Text(
                           title,
-                          style: const TextStyle(
-                              color: Colors.white,
+                          style: TextStyle(
+                              color: reverse ? Colors.white : Colors.black,
                               fontSize: Sizes.size14,
                               fontWeight: FontWeight.w600),
                         ),
