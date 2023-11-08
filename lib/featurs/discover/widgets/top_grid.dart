@@ -12,11 +12,19 @@ class TopGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AspectRatio(
-          aspectRatio: 9 / 16,
-          child: Image.network(
-            "https://source.unsplash.com/random",
-            fit: BoxFit.cover,
+        Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              Sizes.size4,
+            ),
+          ),
+          child: AspectRatio(
+            aspectRatio: 9 / 16,
+            child: Image.network(
+              "https://source.unsplash.com/random",
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Gaps.v8,
@@ -33,7 +41,7 @@ class TopGrid extends StatelessWidget {
         Row(
           children: [
             const CircleAvatar(
-              radius: Sizes.size16,
+              radius: Sizes.size14,
               backgroundImage:
                   NetworkImage("https://source.unsplash.com/random"),
             ),
