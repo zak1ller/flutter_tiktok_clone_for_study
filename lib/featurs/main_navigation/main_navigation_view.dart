@@ -15,7 +15,7 @@ class MainNavigationView extends StatefulWidget {
 class _MainNavigationViewState extends State<MainNavigationView> {
   final List<Widget> views = [
     const VideoTimelineView(),
-    const DiscoverView(),
+    DiscoverView(),
     const Column(
       children: [
         Text("Video"),
@@ -33,7 +33,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     ),
   ];
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onTap(int i) {
     setState(() {
@@ -63,7 +63,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const DiscoverView(),
+            child: DiscoverView(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
