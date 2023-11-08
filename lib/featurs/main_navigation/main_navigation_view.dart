@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/featurs/discover/discover_view.dart';
+import 'package:tiktok_clone/featurs/inbox/inbox_view.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/featurs/videos/video_timeline_view.dart';
@@ -15,17 +16,9 @@ class MainNavigationView extends StatefulWidget {
 class _MainNavigationViewState extends State<MainNavigationView> {
   final List<Widget> views = [
     const VideoTimelineView(),
-    DiscoverView(),
-    const Column(
-      children: [
-        Text("Video"),
-      ],
-    ),
-    const Column(
-      children: [
-        Text("Inbox"),
-      ],
-    ),
+    const DiscoverView(),
+    const InboxView(),
+    const InboxView(),
     const Column(
       children: [
         Text("Profile"),
@@ -33,7 +26,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     ),
   ];
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 3;
 
   void _onTap(int i) {
     setState(() {
@@ -63,15 +56,15 @@ class _MainNavigationViewState extends State<MainNavigationView> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: DiscoverView(),
+            child: const DiscoverView(),
           ),
           Offstage(
             offstage: _selectedIndex != 2,
-            child: views[_selectedIndex],
+            child: const InboxView(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: views[_selectedIndex],
+            child: const InboxView(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
