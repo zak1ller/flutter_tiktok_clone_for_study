@@ -10,6 +10,22 @@ class ChatsView extends StatefulWidget {
 }
 
 class _ChatsViewState extends State<ChatsView> {
+  final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
+
+  final List<int> _items = [];
+
+  void _addItem() {
+    if (_key.currentState != null) {
+      _key.currentState!.insertItem(
+        _items.length,
+        duration: const Duration(
+          milliseconds: 200,
+        ),
+      );
+      _items.add(_items.length);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,49 +34,58 @@ class _ChatsViewState extends State<ChatsView> {
         title: const Text("Direct messages"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: _addItem,
             icon: const FaIcon(
               FontAwesomeIcons.plus,
             ),
           ),
         ],
       ),
-      body: ListView(
+      body: AnimatedList(
+        key: _key,
         padding: const EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
-        children: [
-          ListTile(
-            leading: const CircleAvatar(
-              radius: 30,
-              foregroundImage:
-                  NetworkImage("https://source.unsplash.com/random"),
-              child: Text("Jason"),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Minsu",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+        itemBuilder:
+            (BuildContext context, int index, Animation<double> animation) {
+          return FadeTransition(
+            key: UniqueKey(),
+            opacity: animation,
+            child: SizeTransition(
+              sizeFactor: animation,
+              child: ListTile(
+                leading: const CircleAvatar(
+                  radius: 30,
+                  foregroundImage:
+                      NetworkImage("https://source.unsplash.com/random"),
+                  child: Text("Jason"),
                 ),
-                Text(
-                  "2:16 PM",
-                  style: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: Sizes.size12,
-                    fontWeight: FontWeight.bold,
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Minsu ($index)",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      "2:16 PM",
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+                subtitle: const Text(
+                  "Hello my name is minsu.",
+                ),
+              ),
             ),
-            subtitle: const Text(
-              "Hello my name is minsu.",
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
