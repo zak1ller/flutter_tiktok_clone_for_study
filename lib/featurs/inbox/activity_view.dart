@@ -16,10 +16,12 @@ class _ActivityViewState extends State<ActivityView>
     with SingleTickerProviderStateMixin {
   final List<String> _notifications = List.generate(20, (index) => "${index}h");
 
+  bool _showingBarrier = false;
+
   late final AnimationController _animationController = AnimationController(
       vsync: this,
       duration: const Duration(
-        milliseconds: 100,
+        milliseconds: 200,
       ));
 
   late final Animation<double> _arrowAnimation = Tween(
@@ -30,6 +32,11 @@ class _ActivityViewState extends State<ActivityView>
   late final Animation<Offset> _panelAnimation = Tween(
     begin: const Offset(0, -1),
     end: const Offset(0, 0),
+  ).animate(_animationController);
+
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
   ).animate(_animationController);
 
   final List<Map<String, dynamic>> _tabs = [
@@ -71,12 +78,15 @@ class _ActivityViewState extends State<ActivityView>
     });
   }
 
-  void _onTitleTap() {
+  void _toggleAnimations() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
     } else {
       _animationController.forward();
     }
+    setState(() {
+      _showingBarrier = !_showingBarrier;
+    });
   }
 
   @override
@@ -84,7 +94,7 @@ class _ActivityViewState extends State<ActivityView>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -207,6 +217,12 @@ class _ActivityViewState extends State<ActivityView>
                 ),
             ],
           ),
+          if (_showingBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true,
+              onDismiss: _toggleAnimations,
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
