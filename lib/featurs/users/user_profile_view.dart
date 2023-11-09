@@ -10,6 +10,12 @@ class UserProfileView extends StatefulWidget {
 class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView();
+    return const CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Text("Profile"),
+        ),
+      ],
+    );
   }
 }
