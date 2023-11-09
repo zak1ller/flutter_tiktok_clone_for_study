@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
@@ -16,13 +17,30 @@ class _UserProfileViewState extends State<UserProfileView> {
           title: Text("Profile"),
         ),
         SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Center(child: Text("Item $index")),
-              ),
+          delegate: SliverChildBuilderDelegate(
+            childCount: 10,
+            (context, index) => Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Center(child: Text("Item $index")),
             ),
-            itemExtent: 100),
+          ),
+          itemExtent: 100,
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 10,
+            (context, index) => Container(
+              color: Colors.blue,
+              child: Center(child: Text("Item $index")),
+            ),
+          ),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 100,
+            mainAxisSpacing: Sizes.size16,
+            crossAxisSpacing: Sizes.size16,
+            childAspectRatio: 1,
+          ),
+        ),
       ],
     );
   }
