@@ -16,6 +16,16 @@ class _UserProfileViewState extends State<UserProfileView> {
         const SliverAppBar(
           title: Text("Profile"),
         ),
+        const SliverToBoxAdapter(
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 20,
+              ),
+            ],
+          ),
+        ),
         SliverFixedExtentList(
           delegate: SliverChildBuilderDelegate(
             childCount: 10,
@@ -26,9 +36,13 @@ class _UserProfileViewState extends State<UserProfileView> {
           ),
           itemExtent: 100,
         ),
+        SliverPersistentHeader(
+          delegate: CustomDelegate(),
+          pinned: true,
+        ),
         SliverGrid(
           delegate: SliverChildBuilderDelegate(
-            childCount: 10,
+            childCount: 100,
             (context, index) => Container(
               color: Colors.blue,
               child: Center(child: Text("Item $index")),
@@ -43,5 +57,35 @@ class _UserProfileViewState extends State<UserProfileView> {
         ),
       ],
     );
+  }
+}
+
+class CustomDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.indigo,
+      child: const FractionallySizedBox(
+        heightFactor: 1,
+        child: Center(
+          child: Text(
+            "Title",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 100;
+
+  @override
+  double get minExtent => 100;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
