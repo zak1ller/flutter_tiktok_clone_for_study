@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/inbox/chat_detail_view.dart';
 
 class ChatsView extends StatefulWidget {
   const ChatsView({super.key});
@@ -24,6 +25,64 @@ class _ChatsViewState extends State<ChatsView> {
       );
       _items.add(_items.length);
     }
+  }
+
+  void _deleteItem(int index) {
+    if (_key.currentState != null) {
+      _key.currentState!.removeItem(
+        index,
+        (context, animation) => SizeTransition(
+          sizeFactor: animation,
+          child: _makeTile(index),
+        ),
+        duration: const Duration(
+          milliseconds: 200,
+        ),
+      );
+      _items.remove(_items[index]);
+    }
+  }
+
+  void _onChatTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ChatDetailView(),
+      ),
+    );
+  }
+
+  Widget _makeTile(int index) {
+    return ListTile(
+      onTap: _onChatTap,
+      onLongPress: () => _deleteItem(index),
+      leading: const CircleAvatar(
+        radius: 30,
+        foregroundImage: NetworkImage("https://source.unsplash.com/random"),
+        child: Text("Jason"),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Minsu ($index)",
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            "2:16 PM",
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: Sizes.size12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+      subtitle: const Text(
+        "Hello my name is minsu.",
+      ),
+    );
   }
 
   @override
@@ -53,36 +112,7 @@ class _ChatsViewState extends State<ChatsView> {
             opacity: animation,
             child: SizeTransition(
               sizeFactor: animation,
-              child: ListTile(
-                leading: const CircleAvatar(
-                  radius: 30,
-                  foregroundImage:
-                      NetworkImage("https://source.unsplash.com/random"),
-                  child: Text("Jason"),
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Minsu ($index)",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "2:16 PM",
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: Sizes.size12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                subtitle: const Text(
-                  "Hello my name is minsu.",
-                ),
-              ),
+              child: _makeTile(index),
             ),
           );
         },
