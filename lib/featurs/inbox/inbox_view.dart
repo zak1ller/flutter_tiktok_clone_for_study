@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/inbox/activity_view.dart';
+import 'package:tiktok_clone/featurs/inbox/chats_view.dart';
 
 class InboxView extends StatelessWidget {
   const InboxView({super.key});
 
-  void _onDmTap() {}
+  void _onDmTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ChatsView(),
+    ));
+  }
+
   void _onActivityTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const ActivityView(),
@@ -21,7 +27,7 @@ class InboxView extends StatelessWidget {
         title: const Text("Inbox"),
         actions: [
           IconButton(
-            onPressed: _onDmTap,
+            onPressed: () => _onDmTap(context),
             icon: const FaIcon(FontAwesomeIcons.message),
           ),
         ],
