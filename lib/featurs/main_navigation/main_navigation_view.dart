@@ -4,6 +4,7 @@ import 'package:tiktok_clone/featurs/discover/discover_view.dart';
 import 'package:tiktok_clone/featurs/inbox/inbox_view.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/featurs/users/user_profile_view.dart';
 import 'package:tiktok_clone/featurs/videos/video_timeline_view.dart';
 
 class MainNavigationView extends StatefulWidget {
@@ -19,14 +20,10 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     const DiscoverView(),
     const InboxView(),
     const InboxView(),
-    const Column(
-      children: [
-        Text("Profile"),
-      ],
-    ),
+    const UserProfileView(),
   ];
 
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
 
   void _onTap(int i) {
     setState(() {
@@ -68,7 +65,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: views[_selectedIndex],
+            child: const UserProfileView(),
           ),
         ],
       ),
