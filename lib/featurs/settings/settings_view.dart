@@ -12,12 +12,27 @@ class SettingsView extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            onTap: () => showAboutDialog(context: context),
+            onTap: () async {
+              final date = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1980),
+                lastDate: DateTime.now(),
+              );
+              final time = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+              );
+              final booking = await showDateRangePicker(
+                context: context,
+                firstDate: DateTime(1980),
+                lastDate: DateTime.now(),
+              );
+            },
             title: const Text(
-              "About",
+              "What is your birthday?",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
-            subtitle: const Text("About this app ..."),
           ),
           const AboutListTile(),
         ],
