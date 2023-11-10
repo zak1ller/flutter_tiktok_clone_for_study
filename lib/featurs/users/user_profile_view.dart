@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/discover/widgets/top_grid.dart';
+import 'package:tiktok_clone/featurs/settings/settings_view.dart';
 import 'package:tiktok_clone/featurs/users/widget/persistent_tab_bar.dart';
 import 'package:tiktok_clone/featurs/users/widget/user_profile_grid.dart';
 import 'package:tiktok_clone/featurs/users/widget/user_profile_info.dart';
@@ -15,6 +15,14 @@ class UserProfileView extends StatefulWidget {
 }
 
 class _UserProfileViewState extends State<UserProfileView> {
+  void _onSettingsTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingsView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,7 +35,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                 title: const Text("Profile"),
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: _onSettingsTap,
                     icon: const FaIcon(
                       FontAwesomeIcons.gear,
                       size: Sizes.size20,
@@ -163,7 +171,8 @@ class _UserProfileViewState extends State<UserProfileView> {
             children: [
               GridView.builder(
                 itemCount: 7,
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 padding: EdgeInsets.zero,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
