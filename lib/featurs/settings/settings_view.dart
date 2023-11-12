@@ -104,6 +104,29 @@ class _SettingsViewState extends State<SettingsView> {
               );
             },
           ),
+          ListTile(
+            title: const Text("Log out (iOS / Bottom)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => CupertinoActionSheet(
+                  title: const Text("Log out"),
+                  actions: [
+                    CupertinoActionSheetAction(
+                      onPressed: () {},
+                      isDestructiveAction: true,
+                      child: const Text("Log out"),
+                    ),
+                    CupertinoActionSheetAction(
+                      onPressed: () {},
+                      child: const Text("Cancel"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           const AboutListTile(),
         ],
       ),
