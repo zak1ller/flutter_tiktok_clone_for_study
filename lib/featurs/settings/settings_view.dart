@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
+
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+  bool _notifications = false;
+
+  void _onNoficationsChange(bool? newValue) {
+    if (newValue == null) return;
+    setState(() {
+      _notifications = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,19 +25,27 @@ class SettingsView extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Switch(value: _notifications, onChanged: _onNoficationsChange),
+          Checkbox(value: _notifications, onChanged: _onNoficationsChange),
+          CheckboxListTile(
+            value: _notifications,
+            onChanged: _onNoficationsChange,
+            title: const Text("Enable notifications"),
+            activeColor: Colors.black,
+          ),
           ListTile(
             onTap: () async {
-              final date = await showDatePicker(
+              showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1980),
                 lastDate: DateTime.now(),
               );
-              final time = await showTimePicker(
+              showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
-              final booking = await showDateRangePicker(
+              showDateRangePicker(
                 context: context,
                 firstDate: DateTime(1980),
                 lastDate: DateTime.now(),
