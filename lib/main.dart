@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/main_navigation/main_navigation_view.dart';
+import 'package:tiktok_clone/featurs/authentication/sign_up_view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 세로 화면 고정
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
+
+  // Status bar 색상 고정
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
   runApp(const TikTokApp());
 }
 
@@ -32,7 +45,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainNavigationView(),
+      home: const SignUpView(),
     );
   }
 }
