@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/username_view.dart';
 import 'package:tiktok_clone/featurs/authentication/login_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/utils/color_manager.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -33,7 +34,6 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        print(orientation);
         return Scaffold(
           body: SafeArea(
             child: Padding(
@@ -51,11 +51,13 @@ class SignUpView extends StatelessWidget {
                     ),
                   ),
                   Gaps.v20,
-                  const Text(
+                  Text(
                     "Create a profile, follow other accounts, make your own videos, and more.",
                     style: TextStyle(
                       fontSize: Sizes.size16,
-                      color: Colors.black45,
+                      color: ColorManager.isDarkMode(context)
+                          ? Colors.grey.shade300
+                          : Colors.black45,
                     ),
                     textAlign: TextAlign.center,
                   ),
