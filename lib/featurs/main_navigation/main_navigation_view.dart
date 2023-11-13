@@ -23,7 +23,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     const UserProfileView(),
   ];
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onTap(int i) {
     setState(() {

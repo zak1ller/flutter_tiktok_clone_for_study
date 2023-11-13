@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/discover/widgets/top_grid.dart';
 
@@ -53,6 +54,7 @@ class _DiscoverViewState extends State<DiscoverView>
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -94,8 +96,8 @@ class _DiscoverViewState extends State<DiscoverView>
               horizontal: Sizes.size8,
               vertical: Sizes.size8,
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: width > Breakpoints.lg ? 5 : 2,
               crossAxisSpacing: Sizes.size8,
               mainAxisSpacing: Sizes.size8,
               childAspectRatio: 9 / 20,
