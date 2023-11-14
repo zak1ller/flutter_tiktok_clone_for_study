@@ -57,6 +57,12 @@ class TikTokApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         primaryColor: const Color(0xFFE9435A),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
       ),
       home: const SignUpView(),
     );
