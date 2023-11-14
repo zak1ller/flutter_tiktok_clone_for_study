@@ -11,12 +11,16 @@ import 'package:tiktok_clone/utils/color_manager.dart';
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
+  static const routeURL = "/";
+  static const routeName = "signUßp";
+
   void _onLoginTap(BuildContext context) {
     context.push(LoginView.routeName);
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    context.push(UsernameView.routeName);
+    // context.push(UsernameView.routeName);
+    context.pushNamed(UsernameView.routeName);
     // context.push("/users/Minsu?show=likes");
   }
 

@@ -15,7 +15,9 @@ class EmailView extends StatefulWidget {
     required this.username,
   });
 
-  static const routeName = "/sign_up/email";
+  static const routeName = "email";
+  static const routeURL = "email";
+
   final String username;
 
   @override
@@ -84,7 +86,7 @@ class _EmailViewState extends State<EmailView> {
               Gaps.v40,
               Text(
                 "What is your email, ${widget.username}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),
