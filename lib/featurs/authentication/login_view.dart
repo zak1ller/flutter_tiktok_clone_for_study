@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/login_form_view.dart';
@@ -9,8 +10,10 @@ import 'package:tiktok_clone/utils/color_manager.dart';
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
+  static const routeName = "/login";
+
   void _onSignupTap(BuildContext context) {
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onEmailLoginTap(BuildContext context) {

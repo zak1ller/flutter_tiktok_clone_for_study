@@ -7,6 +7,8 @@ import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 class UsernameView extends StatefulWidget {
   const UsernameView({super.key});
 
+static const routeName = "/sign_up/username";
+
   @override
   State<UsernameView> createState() => _UsernameViewState();
 }

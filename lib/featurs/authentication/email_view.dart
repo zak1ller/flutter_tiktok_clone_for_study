@@ -7,6 +7,8 @@ import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 class EmailView extends StatefulWidget {
   const EmailView({super.key});
 
+  static const routeName = "/sign_up/email";
+
   @override
   State<EmailView> createState() => _EmailViewState();
 }

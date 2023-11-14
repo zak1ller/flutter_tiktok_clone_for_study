@@ -20,7 +20,9 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     const DiscoverView(),
     const InboxView(),
     const InboxView(),
-    const UserProfileView(),
+    const UserProfileView(
+      username: "Minsu",
+    ),
   ];
 
   int _selectedIndex = 1;
@@ -65,7 +67,9 @@ class _MainNavigationViewState extends State<MainNavigationView> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const UserProfileView(),
+            child: const UserProfileView(
+              username: "Minsu",
+            ),
           ),
         ],
       ),

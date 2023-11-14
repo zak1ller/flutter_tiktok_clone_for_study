@@ -8,7 +8,12 @@ import 'package:tiktok_clone/featurs/users/widget/user_profile_grid.dart';
 import 'package:tiktok_clone/featurs/users/widget/user_profile_info.dart';
 
 class UserProfileView extends StatefulWidget {
-  const UserProfileView({super.key});
+  const UserProfileView({
+    super.key,
+    required this.username,
+  });
+
+  final String username;
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();
@@ -57,9 +62,9 @@ class _UserProfileViewState extends State<UserProfileView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "@Jason",
-                          style: TextStyle(
+                        Text(
+                          "@${widget.username}",
+                          style: const TextStyle(
                             fontSize: Sizes.size16 + Sizes.size2,
                             fontWeight: FontWeight.w600,
                           ),
