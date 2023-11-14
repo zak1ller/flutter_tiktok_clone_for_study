@@ -12,7 +12,7 @@ class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
   static const routeURL = "/";
-  static const routeName = "signUßp";
+  static const routeName = "signUp";
 
   void _onLoginTap(BuildContext context) {
     context.push(LoginView.routeName);
