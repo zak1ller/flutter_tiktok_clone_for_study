@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/email_view.dart';
@@ -7,7 +8,7 @@ import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 class UsernameView extends StatefulWidget {
   const UsernameView({super.key});
 
-static const routeName = "/sign_up/username";
+  static const routeName = "/sign_up/username";
 
   @override
   State<UsernameView> createState() => _UsernameViewState();
@@ -39,11 +40,17 @@ class _UsernameViewState extends State<UsernameView> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailView(),
-      ),
-    );
+    if (_username.isNotEmpty) {
+      context.push(
+        EmailView.routeName,
+        extra: EmailViewArgs(username: _username),
+      );
+    }
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => const EmailView(),
+    //   ),
+    // );
   }
 
   @override

@@ -11,9 +11,11 @@ class UserProfileView extends StatefulWidget {
   const UserProfileView({
     super.key,
     required this.username,
+    this.defaultPage = 0,
   });
 
   final String username;
+  final int defaultPage;
 
   @override
   State<UserProfileView> createState() => _UserProfileViewState();
@@ -32,6 +34,7 @@ class _UserProfileViewState extends State<UserProfileView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
+        initialIndex: widget.defaultPage,
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {

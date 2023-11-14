@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/authentication/username_view.dart';
 import 'package:tiktok_clone/featurs/authentication/login_view.dart';
+import 'package:tiktok_clone/featurs/authentication/username_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/utils/color_manager.dart';
 
@@ -17,6 +17,7 @@ class SignUpView extends StatelessWidget {
 
   void _onEmailLoginTap(BuildContext context) {
     context.push(UsernameView.routeName);
+    // context.push("/users/Minsu?show=likes");
   }
 
   void _onAppleLoginTap(BuildContext context) {}

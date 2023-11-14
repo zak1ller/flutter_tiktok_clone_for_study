@@ -21,13 +21,37 @@ final router = GoRouter(
     ),
     GoRoute(
       path: EmailView.routeName,
-      builder: (context, state) => const EmailView(),
+      builder: (context, state) {
+        final args = state.extra as EmailViewArgs;
+        return EmailView(username: args.username);
+      },
     ),
     GoRoute(
       path: "/users/:username",
       builder: (context, state) {
         final username = state.pathParameters['username'];
-        return UserProfileView(username: username!);
+        final tab = state.uri.queryParameters['show'];
+        if (tab != null) {
+          if (tab == "posts") {
+            return UserProfileView(
+              defaultPage: 0,
+              username: username!,
+            );
+          } else if (tab == "likes") {
+            return UserProfileView(
+              defaultPage: 1,
+              username: username!,
+            );
+          } else {
+            return UserProfileView(
+              username: username!,
+            );
+          }
+        } else {
+          return UserProfileView(
+            username: username!,
+          );
+        }
       },
     ),
   ],

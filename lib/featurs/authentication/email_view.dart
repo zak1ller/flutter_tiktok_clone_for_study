@@ -4,10 +4,19 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/password_view.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 
+class EmailViewArgs {
+  final String username;
+  EmailViewArgs({required this.username});
+}
+
 class EmailView extends StatefulWidget {
-  const EmailView({super.key});
+  const EmailView({
+    super.key,
+    required this.username,
+  });
 
   static const routeName = "/sign_up/email";
+  final String username;
 
   @override
   State<EmailView> createState() => _EmailViewState();
@@ -73,8 +82,8 @@ class _EmailViewState extends State<EmailView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              const Text(
-                "What is your email",
+              Text(
+                "What is your email, ${widget.username}",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
