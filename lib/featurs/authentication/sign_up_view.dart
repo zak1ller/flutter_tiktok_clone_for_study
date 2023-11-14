@@ -101,7 +101,9 @@ class SignUpView extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.grey.shade50,
+            color: ColorManager.isDarkMode(context)
+                ? Colors.grey.shade900
+                : Colors.grey.shade50,
             elevation: 2,
             height: Sizes.size60,
             child: Row(

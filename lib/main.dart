@@ -29,6 +29,12 @@ class TikTokApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: ThemeData(
         brightness: Brightness.light,
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(
+            fontSize: Sizes.size24,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         textSelectionTheme: const TextSelectionThemeData(
