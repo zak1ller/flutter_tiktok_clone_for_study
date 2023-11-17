@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/inbox/chat_detail_view.dart';
 
 class ChatsView extends StatefulWidget {
   const ChatsView({super.key});
+
+  static const routeName = "chats";
+  static const routeURL = "/chats";
 
   @override
   State<ChatsView> createState() => _ChatsViewState();
@@ -43,17 +47,18 @@ class _ChatsViewState extends State<ChatsView> {
     }
   }
 
-  void _onChatTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ChatDetailView(),
-      ),
+  void _onChatTap(int i) {
+    context.pushNamed(
+      ChatDetailView.routeName,
+      pathParameters: {
+        "chatId": "$i",
+      },
     );
   }
 
   Widget _makeTile(int index) {
     return ListTile(
-      onTap: _onChatTap,
+      onTap: () => _onChatTap(index),
       onLongPress: () => _deleteItem(index),
       leading: const CircleAvatar(
         radius: 30,

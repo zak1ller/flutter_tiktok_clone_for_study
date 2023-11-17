@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/inbox/activity_view.dart';
 import 'package:tiktok_clone/featurs/inbox/chats_view.dart';
@@ -8,15 +9,11 @@ class InboxView extends StatelessWidget {
   const InboxView({super.key});
 
   void _onDmTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ChatsView(),
-    ));
+    context.pushNamed(ChatsView.routeName);
   }
 
   void _onActivityTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ActivityView(),
-    ));
+    context.pushNamed(ActivityView.routeName);
   }
 
   @override

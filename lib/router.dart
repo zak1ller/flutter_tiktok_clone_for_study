@@ -2,7 +2,11 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/common/widgets/main_navigation_view.dart';
 import 'package:tiktok_clone/featurs/authentication/login_view.dart';
 import 'package:tiktok_clone/featurs/authentication/sign_up_view.dart';
+import 'package:tiktok_clone/featurs/inbox/activity_view.dart';
+import 'package:tiktok_clone/featurs/inbox/chat_detail_view.dart';
+import 'package:tiktok_clone/featurs/inbox/chats_view.dart';
 import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
+import 'package:tiktok_clone/featurs/videos/video_recording.dart';
 
 final router = GoRouter(
   initialLocation: "/home",
@@ -29,6 +33,31 @@ final router = GoRouter(
         final tab = state.pathParameters["tab"]!;
         return MainNavigationView(tab: tab);
       },
-    )
+    ),
+    GoRoute(
+      name: ActivityView.routeName,
+      path: ActivityView.routeURL,
+      builder: (context, state) => const ActivityView(),
+    ),
+    GoRoute(
+      name: ChatsView.routeName,
+      path: ChatsView.routeURL,
+      builder: (context, state) => const ChatsView(),
+      routes: [
+        GoRoute(
+          name: ChatDetailView.routeName,
+          path: ChatDetailView.routeURL,
+          builder: (context, state) {
+            final chatId = state.pathParameters["chatId"]!;
+            return ChatDetailView(chatId: chatId);
+          },
+        )
+      ],
+    ),
+    GoRoute(
+      name: VideoRecording.routeName,
+      path: VideoRecording.routeURL,
+      builder: (context, state) => const VideoRecording(),
+    ),
   ],
 );

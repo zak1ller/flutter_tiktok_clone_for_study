@@ -4,7 +4,15 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class ChatDetailView extends StatefulWidget {
-  const ChatDetailView({super.key});
+  const ChatDetailView({
+    super.key,
+    required this.chatId,
+  });
+
+  static const routeName = "chatDetail";
+  static const routeURL = ":chatId";
+
+  final String chatId;
 
   @override
   State<ChatDetailView> createState() => _ChatDetailViewState();

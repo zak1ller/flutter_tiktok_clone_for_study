@@ -6,6 +6,9 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class ActivityView extends StatefulWidget {
   const ActivityView({super.key});
 
+  static const routeName = "activity";
+  static const routeURL = "/activity";
+
   @override
   State<ActivityView> createState() => _ActivityViewState();
 }

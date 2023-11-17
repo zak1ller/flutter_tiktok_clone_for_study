@@ -6,6 +6,7 @@ import 'package:tiktok_clone/featurs/inbox/inbox_view.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/navigation_button.dart';
 import 'package:tiktok_clone/featurs/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/featurs/users/user_profile_view.dart';
+import 'package:tiktok_clone/featurs/videos/video_recording.dart';
 import 'package:tiktok_clone/featurs/videos/video_timeline_view.dart';
 
 class MainNavigationView extends StatefulWidget {
@@ -41,12 +42,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
   }
 
   void _onPostVideoTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Container(),
-        fullscreenDialog: true,
-      ),
-    );
+    context.pushNamed(VideoRecording.routeName);
   }
 
   @override
