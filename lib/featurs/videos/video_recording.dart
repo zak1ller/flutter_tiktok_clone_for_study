@@ -15,9 +15,10 @@ class VideoRecording extends StatefulWidget {
 }
 
 class _VideoRecordingState extends State<VideoRecording>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  bool _appActivated = true;
 
   late CameraController _cameraController;
   late FlashMode _flashMode;
@@ -43,8 +44,6 @@ class _VideoRecordingState extends State<VideoRecording>
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    print(111);
     _buttonAnimationController.dispose();
     _progressAnimationController.dispose();
     _cameraController.dispose();
@@ -55,6 +54,9 @@ class _VideoRecordingState extends State<VideoRecording>
   void initState() {
     super.initState();
     _initPermissions();
+
+    WidgetsBinding.instance.addObserver(this);
+
     _progressAnimationController.addListener(() {
       setState(() {});
     });
@@ -63,6 +65,21 @@ class _VideoRecordingState extends State<VideoRecording>
         _stopRecording();
       }
     });
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    // 권한이 없는 상태에서 앱을 실행할 경우 카메라가 초기화 되지 않은 상태에서 
+    if (!_cameraController.value.isInitialized) return;
+
+    if (state == AppLifecycleState.inactive) {
+      _appActivated = false;
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      _appActivated = true;
+      await _initCamera();
+      setState(() {});
+    }
   }
 
   Future<void> _initPermissions() async {
@@ -187,7 +204,7 @@ class _VideoRecordingState extends State<VideoRecording>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  CameraPreview(_cameraController),
+                  if (_appActivated) CameraPreview(_cameraController),
                   Positioned(
                     top: Sizes.size16 + MediaQuery.of(context).padding.top,
                     right: Sizes.size16,
