@@ -54,7 +54,7 @@ class _VideoRecordingState extends State<VideoRecording>
   void dispose() {
     _buttonAnimationController.dispose();
     _progressAnimationController.dispose();
-    _cameraController.dispose();
+    if (!_noCamera) _cameraController.dispose();
     super.dispose();
   }
 
@@ -82,6 +82,8 @@ class _VideoRecordingState extends State<VideoRecording>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (_noCamera) return;
+
     // 권한이 없는 상태에서 앱을 실행할 경우 카메라가 초기화 되지 않은 상태에서
     if (!_cameraController.value.isInitialized) return;
 
@@ -221,6 +223,11 @@ class _VideoRecordingState extends State<VideoRecording>
                       !_noCamera &&
                       _cameraController.value.isInitialized)
                     CameraPreview(_cameraController),
+                  const Positioned(
+                    top: Sizes.size40,
+                    left: Sizes.size20,
+                    child: CloseButton(),
+                  ),
                   if (!_noCamera)
                     Positioned(
                       top: Sizes.size16 + MediaQuery.of(context).padding.top,
