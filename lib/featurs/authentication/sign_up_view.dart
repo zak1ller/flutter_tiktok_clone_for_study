@@ -15,13 +15,16 @@ class SignUpView extends StatelessWidget {
   static const routeName = "signUp";
 
   void _onLoginTap(BuildContext context) {
-    context.push(LoginView.routeName);
+    context.pushNamed(LoginView.routeName);
   }
 
   void _onEmailLoginTap(BuildContext context) {
-    // context.push(UsernameView.routeName);
-    context.pushNamed(UsernameView.routeName);
-    // context.push("/users/Minsu?show=likes");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameView(),
+      ),
+    );
   }
 
   void _onAppleLoginTap(BuildContext context) {}

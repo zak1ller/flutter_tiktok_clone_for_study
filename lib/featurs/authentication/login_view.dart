@@ -10,7 +10,8 @@ import 'package:tiktok_clone/utils/color_manager.dart';
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  static const routeName = "/login";
+  static const routeURL = "/login";
+  static const routeName = "login";
 
   void _onSignupTap(BuildContext context) {
     context.pop();

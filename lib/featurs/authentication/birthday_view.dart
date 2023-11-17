@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
@@ -36,12 +37,7 @@ class _BirthdayViewState extends State<BirthdayView> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestsView(),
-      ),
-      (route) => false,
-    );
+    context.pushReplacementNamed(InterestsView.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {

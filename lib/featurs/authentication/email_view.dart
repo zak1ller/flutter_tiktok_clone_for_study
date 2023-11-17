@@ -15,9 +15,6 @@ class EmailView extends StatefulWidget {
     required this.username,
   });
 
-  static const routeName = "email";
-  static const routeURL = "email";
-
   final String username;
 
   @override

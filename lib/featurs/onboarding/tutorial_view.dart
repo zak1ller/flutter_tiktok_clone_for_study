@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/main_navigation/main_navigation_view.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation_view.dart';
 import 'package:tiktok_clone/featurs/onboarding/widgets/tutorial_page.dart';
 import 'package:tiktok_clone/utils/color_manager.dart';
 

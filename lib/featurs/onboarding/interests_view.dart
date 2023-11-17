@@ -48,6 +48,9 @@ const interests = [
 class InterestsView extends StatefulWidget {
   const InterestsView({super.key});
 
+  static const routeName = "interests";
+  static const routeURL = "/tutorial";
+  
   @override
   State<InterestsView> createState() => _InterestsViewState();
 }
