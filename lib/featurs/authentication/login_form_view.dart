@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
@@ -23,12 +24,7 @@ class _LoginFormViewState extends State<LoginFormView> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const InterestsView(),
-          ),
-          (route) => false,
-        );
+        context.goNamed(InterestsView.routeName);
       }
     }
   }

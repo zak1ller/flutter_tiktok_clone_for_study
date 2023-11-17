@@ -37,7 +37,7 @@ class _BirthdayViewState extends State<BirthdayView> {
   }
 
   void _onNextTap() {
-    context.pushReplacementNamed(InterestsView.routeName);
+    context.goNamed(InterestsView.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {
