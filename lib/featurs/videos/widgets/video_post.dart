@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -33,19 +34,12 @@ class _VideoPostState extends State<VideoPost>
   bool _isPauseButtonTapped = false;
   // Disposed 이후 VisibilityDetector 호출을 막기 위해 dispoased를 체크하는 변수입니다.
   bool _isDisposed = false;
-  bool _autoMute = videoConfig.value;
 
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
     _initAnimationController();
-
-    videoConfig.addListener(() {
-      setState(() {
-        _autoMute = videoConfig.value;
-      });
-    });
   }
 
   @override
@@ -198,10 +192,10 @@ class _VideoPostState extends State<VideoPost>
               top: 40,
               child: IconButton(
                 onPressed: () {
-                  videoConfig.value = !videoConfig.value;
+                  context.read<VideoConfig>().toggleIsMuted();
                 },
                 icon: FaIcon(
-                  _autoMute
+                  context.watch<VideoConfig>().isMuted
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.white,
