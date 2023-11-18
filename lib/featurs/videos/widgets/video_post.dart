@@ -33,7 +33,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPauseButtonTapped = false;
   // Disposed 이후 VisibilityDetector 호출을 막기 위해 dispoased를 체크하는 변수입니다.
   bool _isDisposed = false;
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -197,7 +197,9 @@ class _VideoPostState extends State<VideoPost>
               left: 20,
               top: 40,
               child: IconButton(
-                onPressed: videoConfig.toggleAutoMute,
+                onPressed: () {
+                  videoConfig.value = !videoConfig.value;
+                },
                 icon: FaIcon(
                   _autoMute
                       ? FontAwesomeIcons.volumeOff

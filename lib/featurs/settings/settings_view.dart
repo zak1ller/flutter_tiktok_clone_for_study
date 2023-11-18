@@ -30,9 +30,9 @@ class _SettingsViewState extends State<SettingsView> {
           AnimatedBuilder(
             animation: videoConfig,
             builder: (context, child) => SwitchListTile(
-              value: videoConfig.autoMute,
+              value: videoConfig.value,
               onChanged: (value) {
-                videoConfig.toggleAutoMute();
+                videoConfig.value = !videoConfig.value;
               },
               title: const Text("Auto Mute"),
               subtitle: const Text("Videos will be muted by default."),
