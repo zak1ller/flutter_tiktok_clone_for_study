@@ -27,11 +27,16 @@ class _SettingsViewState extends State<SettingsView> {
       ),
       body: ListView(
         children: [
-          SwitchListTile(
-            value: VideoConfigData.of(context).autoMute,
-            onChanged: (value) => VideoConfigData.of(context).toggleMuted(),
-            title: const Text("Auto Mute"),
-            subtitle: const Text("Videos will be muted by default."),
+          AnimatedBuilder(
+            animation: videoConfig,
+            builder: (context, child) => SwitchListTile(
+              value: videoConfig.autoMute,
+              onChanged: (value) {
+                videoConfig.toggleAutoMute();
+              },
+              title: const Text("Auto Mute"),
+              subtitle: const Text("Videos will be muted by default."),
+            ),
           ),
           Switch(value: _notifications, onChanged: _onNoficationsChange),
           Checkbox(value: _notifications, onChanged: _onNoficationsChange),
