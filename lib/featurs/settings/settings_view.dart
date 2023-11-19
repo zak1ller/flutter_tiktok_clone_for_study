@@ -36,8 +36,6 @@ class _SettingsViewState extends State<SettingsView> {
             title: const Text("Auto Mute"),
             subtitle: const Text("Videos will be muted by default."),
           ),
-          Switch(value: _notifications, onChanged: _onNoficationsChange),
-          Checkbox(value: _notifications, onChanged: _onNoficationsChange),
           CheckboxListTile(
             value: _notifications,
             onChanged: _onNoficationsChange,
