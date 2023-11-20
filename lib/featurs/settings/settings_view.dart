@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
+import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -29,11 +30,17 @@ class _SettingsViewState extends State<SettingsView> {
       body: ListView(
         children: [
           SwitchListTile(
-            value: context.watch<VideoConfig>().isMuted,
-            onChanged: (value) {
-              context.read<VideoConfig>().toggleIsMuted();
-            },
+            value: context.watch<PlaybackConfigViewModel>().muted,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setMuted(value),
             title: const Text("Auto Mute"),
+            subtitle: const Text("Videos will be muted by default."),
+          ),
+          SwitchListTile(
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setAutoplay(value),
+            title: const Text("Auto Play"),
             subtitle: const Text("Videos will be muted by default."),
           ),
           CheckboxListTile(
