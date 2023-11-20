@@ -35,8 +35,12 @@ class _VideoPostState extends State<VideoPost>
   // Disposed 이후 VisibilityDetector 호출을 막기 위해 dispoased를 체크하는 변수입니다.
   bool _isDisposed = false;
 
+  late bool _isMutedOnlyThisVideo =
+      context.read<PlaybackConfigViewModel>().muted;
+
   @override
   void initState() {
+    print(_isMutedOnlyThisVideo);
     super.initState();
     _initVideoPlayer();
     _initAnimationController();
@@ -77,7 +81,7 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onPlaybackConfigChanged() {
-    if(!mounted) return;
+    if (!mounted) return;
     final muted = context.read<PlaybackConfigViewModel>().muted;
     if (muted) {
       _videoPlayerController.setVolume(0);
@@ -209,12 +213,11 @@ class _VideoPostState extends State<VideoPost>
               top: 40,
               child: IconButton(
                 onPressed: () {
-                  context
-                      .read<PlaybackConfigViewModel>()
-                      .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+                  _isMutedOnlyThisVideo = !_isMutedOnlyThisVideo;
+                  setState(() {});
                 },
                 icon: FaIcon(
-                  context.watch<PlaybackConfigViewModel>().muted
+                  _isMutedOnlyThisVideo
                       ? FontAwesomeIcons.volumeOff
                       : FontAwesomeIcons.volumeHigh,
                   color: Colors.white,
