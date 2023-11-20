@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/featurs/videos/view_models/timeline_vm.dart';
 import 'package:tiktok_clone/featurs/videos/views/widgets/video_post.dart';
 
-class VideoTimelineView extends StatefulWidget {
+class VideoTimelineView extends ConsumerStatefulWidget {
   const VideoTimelineView({super.key});
 
   @override
-  State<VideoTimelineView> createState() => _VideoTimelineViewState();
+  VideoTimelineViewState createState() => VideoTimelineViewState();
 }
 
-class _VideoTimelineViewState extends State<VideoTimelineView> {
+class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
   final PageController _pageController = PageController();
   int _itemCount = 4;
 
@@ -52,20 +54,31 @@ class _VideoTimelineViewState extends State<VideoTimelineView> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _onRefresh,
-      edgeOffset: 20,
-      color: Theme.of(context).primaryColor,
-      child: PageView.builder(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        itemCount: _itemCount,
-        itemBuilder: (context, index) => VideoPost(
-          onVideoFinisehd: _onVideoFinished,
-          index: index,
-        ),
-        onPageChanged: _onPageChanged,
-      ),
-    );
+    return ref.watch(timelineProvider).when(
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) => Center(
+            child: Text(
+              "Could not load videos. $error",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          data: (videos) => RefreshIndicator(
+            onRefresh: _onRefresh,
+            edgeOffset: 20,
+            color: Theme.of(context).primaryColor,
+            child: PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              itemCount: videos.length,
+              itemBuilder: (context, index) => VideoPost(
+                onVideoFinisehd: _onVideoFinished,
+                index: index,
+              ),
+              onPageChanged: _onPageChanged,
+            ),
+          ),
+        );
   }
 }
