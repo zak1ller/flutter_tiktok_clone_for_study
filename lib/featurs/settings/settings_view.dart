@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/featurs/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
 
 class SettingsView extends ConsumerWidget {
@@ -70,7 +72,10 @@ class SettingsView extends ConsumerWidget {
                   content: const Text("are you sure want to log out?"),
                   actions: [
                     CupertinoDialogAction(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        ref.read(authRepo).signOut();
+                        context.go("/");
+                      },
                       isDestructiveAction: true,
                       child: const Text("Log out"),
                     ),

@@ -12,7 +12,6 @@ import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
 import 'package:tiktok_clone/featurs/videos/views/video_recording.dart';
 
 final routerProvider = Provider((ref) {
-  ref.read(authRepo);
   return GoRouter(
     initialLocation: "/home",
     redirect: (context, state) {
