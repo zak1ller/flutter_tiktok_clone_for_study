@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
@@ -10,7 +10,7 @@ import 'package:tiktok_clone/featurs/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinisehd;
   final int index;
 
@@ -21,10 +21,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
@@ -42,10 +42,6 @@ class _VideoPostState extends State<VideoPost>
     super.initState();
     _initVideoPlayer();
     _initAnimationController();
-
-    // context
-    //     .read<PlaybackConfigViewModel>()
-    //     .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -80,9 +76,11 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    // final muted = context.read<PlaybackConfigViewModel>().muted;
-    const muted = false;
-    if (muted) {
+
+    _isMutedOnlyThisVideo = !_isMutedOnlyThisVideo;
+                  setState(() {});
+
+    if (_isMutedOnlyThisVideo) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -104,8 +102,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPauseButtonTapped) {
-      // final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      final autoplay = false;
+      final autoplay = ref.read(playbackConfigProvider).autoplay;
       if (autoplay) {
         _videoPlayerController.play();
       }
@@ -212,10 +209,7 @@ class _VideoPostState extends State<VideoPost>
               left: 20,
               top: 40,
               child: IconButton(
-                onPressed: () {
-                  _isMutedOnlyThisVideo = !_isMutedOnlyThisVideo;
-                  setState(() {});
-                },
+                onPressed: () => _onPlaybackConfigChanged(),
                 icon: FaIcon(
                   _isMutedOnlyThisVideo
                       ? FontAwesomeIcons.volumeOff
