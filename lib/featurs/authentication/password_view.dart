@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/birthday_view.dart';
+import 'package:tiktok_clone/featurs/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 
-class PasswordView extends StatefulWidget {
+class PasswordView extends ConsumerStatefulWidget {
   const PasswordView({super.key});
 
   @override
-  State<PasswordView> createState() => _EmailViewState();
+  EmailViewState createState() => EmailViewState();
 }
 
-class _EmailViewState extends State<PasswordView> {
+class EmailViewState extends ConsumerState<PasswordView> {
   final TextEditingController _passwordController = TextEditingController();
 
   String _password = "";
@@ -40,6 +42,10 @@ class _EmailViewState extends State<PasswordView> {
 
   void _onSubmit() {
     if (!_isPasswordValid()) return;
+
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {...state, "password": _password};
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const BirthdayView(),

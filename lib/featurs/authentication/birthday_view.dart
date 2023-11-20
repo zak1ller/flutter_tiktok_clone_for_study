@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
 
-class BirthdayView extends StatefulWidget {
+class BirthdayView extends ConsumerStatefulWidget {
   const BirthdayView({super.key});
 
   @override
-  State<BirthdayView> createState() => _BirthdayViewState();
+  BirthdayViewState createState() => BirthdayViewState();
 }
 
-class _BirthdayViewState extends State<BirthdayView> {
+class BirthdayViewState extends ConsumerState<BirthdayView> {
   final TextEditingController _birthdayController = TextEditingController();
 
   DateTime initialDate = DateTime.now().subtract(
@@ -37,7 +37,8 @@ class _BirthdayViewState extends State<BirthdayView> {
   }
 
   void _onNextTap() {
-    context.goNamed(InterestsView.routeName);
+    ref.read(signUpProvider.notifier).signUp();
+    // context.goNamed(InterestsView.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {
@@ -103,7 +104,7 @@ class _BirthdayViewState extends State<BirthdayView> {
               Gaps.v16,
               FormButton(
                 onTap: _onNextTap,
-                disabled: false,
+                disabled: ref.watch(signUpProvider).isLoading,
               ),
             ],
           ),

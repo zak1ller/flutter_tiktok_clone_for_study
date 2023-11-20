@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/password_view.dart';
+import 'package:tiktok_clone/featurs/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
 
 class EmailViewArgs {
@@ -9,7 +11,7 @@ class EmailViewArgs {
   EmailViewArgs({required this.username});
 }
 
-class EmailView extends StatefulWidget {
+class EmailView extends ConsumerStatefulWidget {
   const EmailView({
     super.key,
     required this.username,
@@ -18,10 +20,10 @@ class EmailView extends StatefulWidget {
   final String username;
 
   @override
-  State<EmailView> createState() => _EmailViewState();
+  EmailViewState createState() => EmailViewState();
 }
 
-class _EmailViewState extends State<EmailView> {
+class EmailViewState extends ConsumerState<EmailView> {
   final TextEditingController _emailController = TextEditingController();
 
   String _email = "";
@@ -48,6 +50,9 @@ class _EmailViewState extends State<EmailView> {
 
   void _onSubmit() {
     if (_email.isEmpty || _isEmailValid() != null) return;
+
+    ref.read(signUpForm.notifier).state = {"email": _email};
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const PasswordView(),
