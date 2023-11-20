@@ -1,25 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
 
-class SettingsView extends StatefulWidget {
+class SettingsView extends ConsumerWidget {
   const SettingsView({super.key});
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
-}
-
-class _SettingsViewState extends State<SettingsView> {
-  bool _notifications = false;
-
-  void _onNoficationsChange(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -27,26 +15,24 @@ class _SettingsViewState extends State<SettingsView> {
       body: ListView(
         children: [
           SwitchListTile(
-            value: false,
-            // value: context.watch<PlaybackConfigViewModel>().muted,
-            onChanged: (value) {},
-            // context.read<PlaybackConfigViewModel>().setMuted(value),
-
+            value: ref.watch(playbackConfigProvider).muted,
+            onChanged: (value) {
+              ref.read(playbackConfigProvider.notifier).setMuted(value);
+            },
             title: const Text("Auto Mute"),
             subtitle: const Text("Videos will be muted by default."),
           ),
           SwitchListTile(
-            // value: context.watch<PlaybackConfigViewModel>().autoplay,
-            value: false,
-            onChanged: (value) {},
-            // onChanged: (value) =>
-            //     context.read<PlaybackConfigViewModel>().setAutoplay(value),
+            value: ref.watch(playbackConfigProvider).autoplay,
+            onChanged: (value) {
+              ref.read(playbackConfigProvider.notifier).setAutoplay(value);
+            },
             title: const Text("Auto Play"),
             subtitle: const Text("Videos will be muted by default."),
           ),
           CheckboxListTile(
-            value: _notifications,
-            onChanged: _onNoficationsChange,
+            value: ref.watch(playbackConfigProvider).autoplay,
+            onChanged: (value) {},
             title: const Text("Enable notifications"),
             activeColor: Colors.black,
           ),
