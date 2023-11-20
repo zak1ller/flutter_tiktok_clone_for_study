@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,10 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/videos/repositories/video_playback_config_repo.dart';
 import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/firebase_options.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final preferences = await SharedPreferences.getInstance();
   final repository = VideoPlaybackConfigRepository(preferences);
@@ -35,13 +39,13 @@ void main() async {
   );
 }
 
-class TikTokApp extends StatelessWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       title: 'TikTok Clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
