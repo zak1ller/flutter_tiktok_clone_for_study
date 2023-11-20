@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/featurs/videos/video_preview_view.dart';
+import 'package:tiktok_clone/featurs/videos/views/video_preview_view.dart';
 
 class VideoRecording extends StatefulWidget {
   const VideoRecording({super.key});

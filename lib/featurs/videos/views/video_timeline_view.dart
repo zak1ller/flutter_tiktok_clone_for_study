@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/featurs/videos/widgets/video_post.dart';
+import 'package:tiktok_clone/featurs/videos/views/widgets/video_post.dart';
 
 class VideoTimelineView extends StatefulWidget {
   const VideoTimelineView({super.key});
