@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/authentication/login_view.dart';
 import 'package:tiktok_clone/featurs/authentication/username_view.dart';
+import 'package:tiktok_clone/featurs/authentication/view_models/social_auth_view_mode.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/utils/color_manager.dart';
 
-class SignUpView extends StatelessWidget {
+class SignUpView extends ConsumerWidget {
   const SignUpView({super.key});
 
   static const routeURL = "/";
@@ -30,7 +32,7 @@ class SignUpView extends StatelessWidget {
   void _onAppleLoginTap(BuildContext context) {}
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Scaffold(
@@ -69,9 +71,10 @@ class SignUpView extends StatelessWidget {
                     ),
                     Gaps.v16,
                     AuthButton(
-                      icon: const FaIcon(FontAwesomeIcons.apple),
-                      text: "Continue with Apple",
-                      onTap: () => _onAppleLoginTap(context),
+                      icon: const FaIcon(FontAwesomeIcons.github),
+                      text: "Continue with Github",
+                      onTap: () =>
+                          ref.read(socialAuthProvider.notifier).githubSignIn(context),
                     ),
                   ],
                   if (orientation == Orientation.landscape) ...[
@@ -87,9 +90,11 @@ class SignUpView extends StatelessWidget {
                         Gaps.h16,
                         Expanded(
                           child: AuthButton(
-                            icon: const FaIcon(FontAwesomeIcons.apple),
-                            text: "Continue with Apple",
-                            onTap: () => _onAppleLoginTap(context),
+                            icon: const FaIcon(FontAwesomeIcons.github),
+                            text: "Continue with Github",
+                            onTap: () => ref
+                                .read(socialAuthProvider.notifier)
+                                .githubSignIn(context),
                           ),
                         ),
                       ],
