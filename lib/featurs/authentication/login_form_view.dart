@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/authentication/view_models/login_view_model.dart';
 import 'package:tiktok_clone/featurs/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
 
-class LoginFormView extends StatefulWidget {
+class LoginFormView extends ConsumerStatefulWidget {
   const LoginFormView({super.key});
 
   @override
-  State<LoginFormView> createState() => _LoginFormViewState();
+  ConsumerState<LoginFormView> createState() => _LoginFormViewState();
 }
 
-class _LoginFormViewState extends State<LoginFormView> {
+class _LoginFormViewState extends ConsumerState<LoginFormView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, String> formData = {};
 
@@ -24,7 +24,12 @@ class _LoginFormViewState extends State<LoginFormView> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        context.goNamed(InterestsView.routeName);
+        ref.read(loginProvider.notifier).login(
+              formData["email"]!,
+              formData["password"]!,
+              context,
+            );
+        // context.goNamed(InterestsView.routeName);
       }
     }
   }
@@ -91,7 +96,7 @@ class _LoginFormViewState extends State<LoginFormView> {
                 Gaps.v28,
                 FormButton(
                   text: "Log in",
-                  disabled: false,
+                  disabled: ref.watch(loginProvider).isLoading,
                   onTap: _onSubmitTap,
                 )
               ],

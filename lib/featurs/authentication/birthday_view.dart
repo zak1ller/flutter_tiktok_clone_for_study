@@ -37,8 +37,7 @@ class BirthdayViewState extends ConsumerState<BirthdayView> {
   }
 
   void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp();
-    // context.goNamed(InterestsView.routeName);
+    ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _setTextFieldDate(DateTime date) {
