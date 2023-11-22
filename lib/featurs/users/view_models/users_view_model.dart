@@ -28,6 +28,7 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   Future<void> createAccount(UserCredential credential) async {
     state = const AsyncValue.loading();
     final profile = UserProfileModel(
+      hasAvatar: false,
       uid: credential.user!.uid,
       name: credential.user!.displayName ?? "Anon",
       email: credential.user!.email ?? "anon@anon.com",
@@ -36,6 +37,20 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     );
     await _userRepository.createProfile(profile);
     state = AsyncValue.data(profile);
+  }
+
+  Future<void> onAvatarUpload() async {
+    state = AsyncValue.data(
+      state.value!.copyWith(
+        hasAvatar: true,
+      ),
+    );
+    await _userRepository.updateUser(
+      state.value!.uid,
+      {
+        "hasAvatar": true,
+      },
+    );
   }
 }
 
