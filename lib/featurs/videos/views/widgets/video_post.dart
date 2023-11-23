@@ -6,6 +6,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/featurs/videos/models/video_model.dart';
 import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/featurs/videos/view_models/video_post_view_model.dart';
 import 'package:tiktok_clone/featurs/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/featurs/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -52,6 +53,10 @@ class VideoPostState extends ConsumerState<VideoPost>
     _isDisposed = true;
     _videoPlayerController.dispose();
     super.dispose();
+  }
+
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -272,6 +277,7 @@ class VideoPostState extends ConsumerState<VideoPost>
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
                   text: "${widget.videoData.likes}",
+                  onTap: _onLikeTap,
                 ),
                 Gaps.v24,
                 VideoButton(

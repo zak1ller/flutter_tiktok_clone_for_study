@@ -20,8 +20,7 @@ class VideosRepository {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos(
-    {int? lastItemCreatedAt}
-  ) {
+      {int? lastItemCreatedAt}) {
     final query = _db
         .collection("videos")
         .orderBy("createdAt", descending: true)
@@ -32,6 +31,13 @@ class VideosRepository {
     } else {
       return query.startAfter([lastItemCreatedAt]).get();
     }
+  }
+
+  Future<void> likeVideo(String videoId, String uid) async {
+    await _db.collection("likes").add({
+      "videoId": videoId,
+      "userId": uid,
+    });
   }
 }
 

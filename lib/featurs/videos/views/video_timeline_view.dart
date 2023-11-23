@@ -46,9 +46,7 @@ class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
   }
 
   Future<void> _onRefresh() {
-    return Future.delayed(
-      const Duration(seconds: 1),
-    );
+    return ref.watch(timelineProvider.notifier).refresh();
   }
 
   @override
