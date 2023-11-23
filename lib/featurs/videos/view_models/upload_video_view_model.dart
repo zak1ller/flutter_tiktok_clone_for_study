@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/featurs/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/featurs/users/view_models/users_view_model.dart';
 import 'package:tiktok_clone/featurs/videos/models/video_model.dart';
-import 'package:tiktok_clone/featurs/videos/repositories/%08videos_repo.dart';
+import 'package:tiktok_clone/featurs/videos/repositories/videos_repo.dart';
 
 class UploadVideoViewModel extends AsyncNotifier<void> {
   late final VideosRepository _repository;
@@ -36,7 +36,7 @@ class UploadVideoViewModel extends AsyncNotifier<void> {
                 fileUrl: await task.ref.getDownloadURL(),
                 thumbnailUrl: "",
                 creatorUid: user.uid,
-                lilkes: 0,
+                likes: 0,
                 comments: 0,
                 createdAt: DateTime.now().millisecondsSinceEpoch,
                 creator: userProfile.name,

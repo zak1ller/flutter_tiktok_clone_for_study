@@ -72,10 +72,14 @@ class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
               controller: _pageController,
               scrollDirection: Axis.vertical,
               itemCount: videos.length,
-              itemBuilder: (context, index) => VideoPost(
-                onVideoFinisehd: _onVideoFinished,
-                index: index,
-              ),
+              itemBuilder: (context, index) {
+                final videoData = videos[index];
+                return VideoPost(
+                  onVideoFinisehd: _onVideoFinished,
+                  index: index,
+                  videoData: videoData,
+                );
+              },
               onPageChanged: _onPageChanged,
             ),
           ),

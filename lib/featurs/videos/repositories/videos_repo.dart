@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +17,13 @@ class VideosRepository {
 
   Future<void> saveVideo(VideoModel data) async {
     await _db.collection("videos").add(data.toJson());
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos() {
+    return _db
+        .collection("videos")
+        .orderBy("createdAt", descending: true)
+        .get();
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/videos/models/video_model.dart';
 import 'package:tiktok_clone/featurs/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/featurs/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/featurs/videos/views/widgets/video_comments.dart';
@@ -13,11 +14,13 @@ import 'package:visibility_detector/visibility_detector.dart';
 class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinisehd;
   final int index;
+  final VideoModel videoData;
 
   const VideoPost({
     super.key,
     required this.onVideoFinisehd,
     required this.index,
+    required this.videoData,
   });
 
   @override
@@ -78,7 +81,7 @@ class VideoPostState extends ConsumerState<VideoPost>
     if (!mounted) return;
 
     _isMutedOnlyThisVideo = !_isMutedOnlyThisVideo;
-                  setState(() {});
+    setState(() {});
 
     if (_isMutedOnlyThisVideo) {
       _videoPlayerController.setVolume(0);
@@ -164,8 +167,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -225,23 +229,23 @@ class VideoPostState extends ConsumerState<VideoPost>
                 Expanded(
                   child: Container(),
                 ),
-                const Text(
-                  "@Json",
-                  style: TextStyle(
+                Text(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: Sizes.size20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Gaps.v2,
-                const Row(
+                Row(
                   children: [
                     Expanded(
                       child: Text(
-                        "sdjlkadkladn slakdjslkadjklad dsjakldjskladn alkdjakldjslkadjsla dlkajdskladjslkadjlkadjkldjk",
+                        widget.videoData.description,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: Sizes.size16,
                         ),
@@ -257,23 +261,23 @@ class VideoPostState extends ConsumerState<VideoPost>
             bottom: 16,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
-                  foregroundImage:
-                      NetworkImage("https://source.unsplash.com/random"),
-                  child: Text("Jason"),
+                  foregroundImage: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/tik-tok-clone-by-minsu.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media&token=83f391cc-ecfb-414a-a247-4a0ab4012f09"),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
-                const VideoButton(
+                VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                  text: "${widget.videoData.likes}",
                 ),
                 Gaps.v24,
                 VideoButton(
                   onTap: () => _onCommnetTap(context),
                   icon: FontAwesomeIcons.solidComment,
-                  text: "33K",
+                  text: "${widget.videoData.comments}",
                 ),
                 Gaps.v24,
                 const VideoButton(
