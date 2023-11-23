@@ -6,7 +6,7 @@ import 'package:tiktok_clone/featurs/videos/repositories/videos_repo.dart';
 
 class VideoPostViewModel extends FamilyAsyncNotifier<void, String> {
   late final VideosRepository _repository;
-  late final _videoId;
+  late final String _videoId;
 
   @override
   FutureOr build(String arg) {
