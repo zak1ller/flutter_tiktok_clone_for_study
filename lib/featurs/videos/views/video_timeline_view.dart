@@ -12,7 +12,7 @@ class VideoTimelineView extends ConsumerStatefulWidget {
 
 class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
   final PageController _pageController = PageController();
-  int _itemCount = 4;
+  int _itemCount = 0;
 
   @override
   void initState() {
@@ -32,9 +32,8 @@ class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
       curve: Curves.linear,
     );
     if (page == _itemCount - 1) {
-      _itemCount += 4;
+      ref.watch(timelineProvider.notifier).fetchNextPage();
     }
-    setState(() {});
   }
 
   void _onVideoFinished() {
@@ -64,25 +63,28 @@ class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
               style: const TextStyle(color: Colors.white),
             ),
           ),
-          data: (videos) => RefreshIndicator(
-            onRefresh: _onRefresh,
-            edgeOffset: 20,
-            color: Theme.of(context).primaryColor,
-            child: PageView.builder(
-              controller: _pageController,
-              scrollDirection: Axis.vertical,
-              itemCount: videos.length,
-              itemBuilder: (context, index) {
-                final videoData = videos[index];
-                return VideoPost(
-                  onVideoFinisehd: _onVideoFinished,
-                  index: index,
-                  videoData: videoData,
-                );
-              },
-              onPageChanged: _onPageChanged,
-            ),
-          ),
+          data: (videos) {
+            _itemCount = videos.length;
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              edgeOffset: 20,
+              color: Theme.of(context).primaryColor,
+              child: PageView.builder(
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                itemCount: videos.length,
+                itemBuilder: (context, index) {
+                  final videoData = videos[index];
+                  return VideoPost(
+                    onVideoFinisehd: _onVideoFinished,
+                    index: index,
+                    videoData: videoData,
+                  );
+                },
+                onPageChanged: _onPageChanged,
+              ),
+            );
+          },
         );
   }
 }
