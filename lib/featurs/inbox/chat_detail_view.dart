@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone/featurs/inbox/view_models/messages_view_model.dart';
 
 class ChatDetailView extends ConsumerStatefulWidget {
@@ -72,50 +75,68 @@ class _ChatDetailViewState extends ConsumerState<ChatDetailView> {
       ),
       body: Stack(
         children: [
-          ListView.separated(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size16,
-              vertical: Sizes.size16,
-            ),
-            itemBuilder: (context, index) {
-              final isMine = index & 2 == 0;
-              return Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment:
-                    isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: [
-                  if (!isMine)
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.1,
+          ref.watch(chatProvider).when(
+                data: (data) {
+                  return ListView.separated(
+                    padding: EdgeInsets.only(
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                      top: Sizes.size16,
+                      bottom:
+                          MediaQuery.of(context).padding.bottom + Sizes.size64,
                     ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(Sizes.size16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Sizes.size16),
-                        color: isMine
-                            ? Colors.blue
-                            : Theme.of(context).primaryColor,
-                      ),
-                      child: const Text(
-                        "This is a message. adhsjkdhskjadh dsahjkdhsakj hhk asdhjkasdhjk ashdjkasdhjk ashdjksahdjk ashdjkhdkj",
-                        style: TextStyle(
-                          fontSize: Sizes.size16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (isMine)
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                    ),
-                ],
-              );
-            },
-            separatorBuilder: (context, index) => Gaps.v8,
-            itemCount: 10,
-          ),
+                    itemBuilder: (context, index) {
+                      final message = data[index];
+                      final isMine =
+                          message.userId == ref.watch(authRepo).user!.uid;
+
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: isMine
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
+                        children: [
+                          if (!isMine)
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                            ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(Sizes.size16),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Sizes.size16),
+                                color: isMine
+                                    ? Colors.blue
+                                    : Theme.of(context).primaryColor,
+                              ),
+                              child: Text(
+                                message.text,
+                                style: const TextStyle(
+                                  fontSize: Sizes.size16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          if (isMine)
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.1,
+                            ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) => Gaps.v8,
+                    itemCount: data.length,
+                  );
+                },
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
+                ),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
           Positioned(
             width: MediaQuery.of(context).size.width,
             bottom: 0,
