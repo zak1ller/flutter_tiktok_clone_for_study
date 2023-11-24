@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/featurs/inbox/view_models/messages_view_model.dart';
 
-class ChatDetailView extends StatefulWidget {
+class ChatDetailView extends ConsumerStatefulWidget {
   const ChatDetailView({
     super.key,
     required this.chatId,
@@ -15,12 +17,23 @@ class ChatDetailView extends StatefulWidget {
   final String chatId;
 
   @override
-  State<ChatDetailView> createState() => _ChatDetailViewState();
+  ConsumerState<ChatDetailView> createState() => _ChatDetailViewState();
 }
 
-class _ChatDetailViewState extends State<ChatDetailView> {
+class _ChatDetailViewState extends ConsumerState<ChatDetailView> {
+  final TextEditingController _editingController = TextEditingController();
+
+  void _onSendMessage() {
+    final text = _editingController.text;
+    if (text == "") return;
+    ref.read(messagesProvider.notifier).sendMessage(text);
+    _editingController.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -119,6 +132,7 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                       child: SizedBox(
                         height: Sizes.size48,
                         child: TextField(
+                          controller: _editingController,
                           minLines: null,
                           maxLines: null,
                           expands: true,
@@ -139,7 +153,12 @@ class _ChatDetailViewState extends State<ChatDetailView> {
                       ),
                     ),
                     Gaps.h20,
-                    const FaIcon(FontAwesomeIcons.paperPlane),
+                    GestureDetector(
+                      onTap: isLoading ? null : _onSendMessage,
+                      child: FaIcon(isLoading
+                          ? FontAwesomeIcons.hourglass
+                          : FontAwesomeIcons.paperPlane),
+                    ),
                   ],
                 ),
               ),
