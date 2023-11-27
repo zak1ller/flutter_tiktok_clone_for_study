@@ -30,8 +30,7 @@ class VideoPost extends ConsumerStatefulWidget {
 
 class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/video.mp4");
+  late final VideoPlayerController _videoPlayerController;
   late final AnimationController _animationController;
 
   bool _isPlaying = false;
@@ -60,6 +59,9 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    final uri = Uri.parse(widget.videoData.fileUrl);
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(uri);
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);

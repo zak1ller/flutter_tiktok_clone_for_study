@@ -73,6 +73,7 @@ class VideoTimelineViewState extends ConsumerState<VideoTimelineView> {
                 itemCount: videos.length,
                 itemBuilder: (context, index) {
                   final videoData = videos[index];
+                  print(videoData.fileUrl);
                   return VideoPost(
                     onVideoFinisehd: _onVideoFinished,
                     index: index,
