@@ -8,6 +8,7 @@ import 'package:tiktok_clone/featurs/authentication/sign_up_view.dart';
 import 'package:tiktok_clone/featurs/inbox/activity_view.dart';
 import 'package:tiktok_clone/featurs/inbox/chat_detail_view.dart';
 import 'package:tiktok_clone/featurs/inbox/chats_view.dart';
+import 'package:tiktok_clone/featurs/notifications/notifications_provider.dart';
 import 'package:tiktok_clone/featurs/onboarding/interests_view.dart';
 import 'package:tiktok_clone/featurs/videos/views/video_recording.dart';
 
@@ -25,66 +26,75 @@ final routerProvider = Provider((ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        name: SignUpView.routeName,
-        path: SignUpView.routeURL,
-        builder: (context, state) => const SignUpView(),
-      ),
-      GoRoute(
-        name: LoginView.routeName,
-        path: LoginView.routeURL,
-        builder: (context, state) => const LoginView(),
-      ),
-      GoRoute(
-        name: InterestsView.routeName,
-        path: InterestsView.routeURL,
-        builder: (context, state) => const InterestsView(),
-      ),
-      GoRoute(
-        path: "/:tab(home|discover|inbox|profile)",
-        name: MainNavigationView.routeName,
-        builder: (context, state) {
-          final tab = state.pathParameters["tab"]!;
-          return MainNavigationView(tab: tab);
+      ShellRoute(
+        builder: (context, state, child) {
+          ref.read(notificationsProvider(context));
+          return child;
         },
-      ),
-      GoRoute(
-        name: ActivityView.routeName,
-        path: ActivityView.routeURL,
-        builder: (context, state) => const ActivityView(),
-      ),
-      GoRoute(
-        name: ChatsView.routeName,
-        path: ChatsView.routeURL,
-        builder: (context, state) => const ChatsView(),
         routes: [
           GoRoute(
-            name: ChatDetailView.routeName,
-            path: ChatDetailView.routeURL,
+            name: SignUpView.routeName,
+            path: SignUpView.routeURL,
+            builder: (context, state) => const SignUpView(),
+          ),
+          GoRoute(
+            name: LoginView.routeName,
+            path: LoginView.routeURL,
+            builder: (context, state) => const LoginView(),
+          ),
+          GoRoute(
+            name: InterestsView.routeName,
+            path: InterestsView.routeURL,
+            builder: (context, state) => const InterestsView(),
+          ),
+          GoRoute(
+            path: "/:tab(home|discover|inbox|profile)",
+            name: MainNavigationView.routeName,
             builder: (context, state) {
-              final chatId = state.pathParameters["chatId"]!;
-              return ChatDetailView(chatId: chatId);
+              final tab = state.pathParameters["tab"]!;
+              return MainNavigationView(tab: tab);
             },
-          )
+          ),
+          GoRoute(
+            name: ActivityView.routeName,
+            path: ActivityView.routeURL,
+            builder: (context, state) => const ActivityView(),
+          ),
+          GoRoute(
+            name: ChatsView.routeName,
+            path: ChatsView.routeURL,
+            builder: (context, state) => const ChatsView(),
+            routes: [
+              GoRoute(
+                name: ChatDetailView.routeName,
+                path: ChatDetailView.routeURL,
+                builder: (context, state) {
+                  final chatId = state.pathParameters["chatId"]!;
+                  return ChatDetailView(chatId: chatId);
+                },
+              )
+            ],
+          ),
+          GoRoute(
+            name: VideoRecording.routeName,
+            path: VideoRecording.routeURL,
+            pageBuilder: (context, state) => CustomTransitionPage(
+              transitionDuration: const Duration(milliseconds: 200),
+              child: const VideoRecording(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                final position = Tween(
+                  begin: const Offset(0, 1),
+                  end: Offset.zero,
+                ).animate(animation);
+                return SlideTransition(
+                  position: position,
+                  child: child,
+                );
+              },
+            ),
+          ),
         ],
-      ),
-      GoRoute(
-        name: VideoRecording.routeName,
-        path: VideoRecording.routeURL,
-        pageBuilder: (context, state) => CustomTransitionPage(
-          transitionDuration: const Duration(milliseconds: 200),
-          child: const VideoRecording(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            final position = Tween(
-              begin: const Offset(0, 1),
-              end: Offset.zero,
-            ).animate(animation);
-            return SlideTransition(
-              position: position,
-              child: child,
-            );
-          },
-        ),
       ),
     ],
   );
